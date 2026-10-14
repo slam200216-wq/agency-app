@@ -234,10 +234,9 @@ td.checked-item { color: #15803d; font-weight: bold; background: #f0fdf4; }
   </div>
 </div>
 
-<!-- تضمين مكتبات Firebase للربط السحابي الفوري -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getFirestore, collection, getDocs, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+  import { getFirestore, collection, getDocs, doc, setDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyDNqrFQG8_-j49Z17Z2z8UEB5F1L6wOS0Y",
@@ -601,6 +600,7 @@ td.checked-item { color: #15803d; font-weight: bold; background: #f0fdf4; }
     f.reset();
   };
 
+  /* تعديل دالة الإرسال لتقوم بحفظ البطاقة الجديدة تلقائياً في Firebase إذا لم تكن موجودة */
   f.onsubmit = async (e) => {
     e.preventDefault();
     const nVal = nn.value.trim();
@@ -608,14 +608,31 @@ td.checked-item { color: #15803d; font-weight: bold; background: #f0fdf4; }
     if(!nVal || !cVal) return;
 
     const sName = (mode === 'r') ? 'الحصة التموينية' : 'الرعاية الاجتماعية';
-    const families = await fetchFamiliesFromFirebase();
+    const colName = (mode === 'r') ? 'ration_records' : 'welfare_records';
+    let families = await fetchFamiliesFromFirebase();
 
     let existingIndex = families.findIndex(fam => fam.card === cVal && fam.serviceName === sName);
+    
     if (existingIndex !== -1) {
       activeIndex = existingIndex;
     } else {
-      activeIndex = families.findIndex(fam => fam.serviceName === sName);
-      if(activeIndex === -1 && families.length > 0) activeIndex = 0;
+      // إذا لم تكن موجودة، قم بإنشائها وحفظها مباشرة في قاعدة البيانات السحابية
+      const newCardData = {
+        name: nVal,
+        card: cVal,
+        members: 10,
+        eligible: 10,
+        blocked: 0,
+        records: {}
+      };
+      
+      try {
+        await setDoc(doc(db, colName, cVal), newCardData);
+        families = await fetchFamiliesFromFirebase();
+        activeIndex = families.findIndex(fam => fam.card === cVal && fam.serviceName === sName);
+      } catch (err) {
+        console.error("خطأ في حفظ البطاقة الجديدة:", err);
+      }
     }
 
     localStorage.setItem('active_family_index', activeIndex);
