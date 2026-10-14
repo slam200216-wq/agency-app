@@ -8,179 +8,182 @@
 <style>
 :root {
   --bg: #fff;
-  --card: #fff;
+  --card: #fffdf8;
   --ink: #1B1610;
   --mute: #7C6A50;
   --line: #E9D9B0;
   --acc: #A55604;
   --btn: #F5A524;
-  --btntfg: #1B1610;
+  --btn-text: #1B1610;
   --bad: #C53030;
   --thbg: #FDF6E2;
 }
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #0D1520;
-    --card: #152134;
-    --ink: #E8F0F8;
-    --mute: #9DB1CE;
-    --line: #26374F;
-    --acc: #70B2F5;
-    --btn: #2B3E5A;
-    --btntfg: #E8F0F8;
-    --thbg: #1B2A40;
-  }
-}
-* { box-sizing: border-box; }
-body { background-color: var(--bg); color: var(--ink); font-family: Tajawal, Tahoma, Arial, sans-serif; font-size: 17px; line-height: 1.5; margin: 0; padding: 0; }
-main { max-width: 560px; margin: 0 auto; padding: 16px; display: flex; flex-direction: column; min-height: 100vh; }
-[hidden] { display: none !important; }
-h1 { font-size: 24px; margin: 8px 0 2px; }
-.sub { color: var(--mute); margin-bottom: 16px; }
-button { font: inherit; font-weight: 500; border: 1px solid var(--line); background: var(--card); color: var(--ink); border-radius: 10px; cursor: pointer; text-align: center; }
-button.main { background: var(--btn); color: var(--btntfg); border-color: var(--btn); border-radius: 10px; padding: 12px; font-weight: 700; width: 100%; }
-.big { display: flex; align-items: center; gap: 12px; width: 100%; padding: 18px 16px; border: 0; border-radius: 16px; font-size: 20px; font-weight: 700; text-align: right; }
-.big.r { background: #F5A524; color: #1B1610; }
-.big.w { background: #E8F0F8; color: #1B1610; }
-label { display: block; font-weight: 500; margin: 12px 0 4px; }
-input { width: 100%; font: inherit; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 12px; outline: none; }
-input:focus, button:focus-visible { outline: 2px solid var(--acc); outline-offset: 1px; }
-#m { min-height: 28px; margin-top: 10px; color: var(--bad); }
-.logo { flex: 1; position: relative; min-height: 200px; margin-top: 8px; }
-.logo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
-.info { border: 1px solid var(--line); border-radius: 10px; padding: 2px 14px; margin: 10px 0 14px; background: var(--card); }
-.info div { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid var(--line); }
-.info div:last-child { border-bottom: 0; }
-.info span { color: var(--mute); }
-h2 { font-size: 19px; margin: 14px 0 8px; }
-.tw { border: 1px solid var(--line); border-radius: 10px; overflow: hidden; margin-bottom: 14px; }
-table { width: 100%; border-collapse: collapse; table-layout: fixed; text-align: center; font-size: 12.5px; }
-th { background: var(--thbg); color: var(--acc); padding: 6px 1px; font-size: 11.5px; line-height: 1.3; }
-td, th { border: 1px solid var(--line); padding: 6px 2px; }
-td:first-child { font-size: 12px; line-height: 1.2; }
-.ck { color: var(--acc); font-weight: 700; font-size: 16px; }
-.bar { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 10px; }
-#up { color: var(--mute); font-size: 13px; margin-top: 10px; }
 
-/* نافذة لا يوجد اتصال بالإنترنت */
+* { box-sizing: border-box; font-family: Tajawal, Tahoma, Arial, sans-serif; }
+body { background-color: var(--bg); color: var(--ink); font-size: 15px; margin: 0; padding: 12px; }
+main { max-width: 600px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
+
+/* أزرار التنقل والتبديل */
+.top-bar { display: flex; justify-content: space-between; align-items: center; }
+.btn-nav { padding: 8px 16px; border: 1px solid var(--line); background: white; color: #b45309; border-radius: 12px; font-weight: bold; cursor: pointer; }
+
+/* شاشة الترحيب واختيار الخدمة */
+.welcome-box { text-align: center; padding: 20px 0; }
+.big-btn { width: 100%; padding: 16px; border: none; border-radius: 14px; font-size: 18px; font-weight: bold; cursor: pointer; margin-bottom: 12px; }
+.big-btn.ration { background: #F5A524; color: #1B1610; }
+.big-btn.welfare { background: #E8F0F8; color: #1B1610; }
+
+/* بطاقة تفاصيل المواطن */
+.citizen-header { text-align: center; margin: 5px 0; }
+.citizen-name { font-size: 22px; font-weight: bold; margin-bottom: 4px; }
+.info-card { background: white; border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px; display: flex; flex-direction: column; gap: 8px; }
+.info-row { display: flex; justify-content: space-between; font-size: 15px; }
+.info-label { color: var(--mute); }
+.info-val { font-weight: bold; }
+
+/* الجدول الشامل */
+.section-title { font-size: 18px; font-weight: bold; text-align: center; margin: 10px 0 5px; color: #1e293b; }
+.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: white; }
+table { width: 100%; border-collapse: collapse; text-align: center; font-size: 12px; min-width: 480px; }
+th { background: var(--thbg); color: #b45309; padding: 8px 2px; border: 1px solid var(--line); font-weight: bold; }
+td { border: 1px solid var(--line); padding: 4px 2px; }
+td.month-name { font-weight: bold; color: var(--mute); background: #fefce8; width: 50px; }
+
+input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--acc); cursor: pointer; }
+input[type="number"], input[type="text"] { width: 90%; padding: 4px; border: 1px solid var(--line); border-radius: 6px; text-align: center; font-size: 12px; outline: none; }
+
+.btn-main { background: #f59e0b; color: white; border: none; padding: 14px; border-radius: 12px; font-size: 16px; font-weight: bold; width: 100%; cursor: pointer; margin-top: 10px; }
+
+/* نافذة عدم الاتصال بالإنترنت */
 .offline-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 2000; justify-content: center; align-items: center; }
 .offline-modal.active { display: flex; }
-.offline-box { background: var(--card); color: var(--ink); width: 85%; max-width: 380px; border-radius: 20px; padding: 25px 20px; text-align: center; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.3); border: 1px solid var(--line); }
+.offline-box { background: white; width: 85%; max-width: 380px; border-radius: 20px; padding: 25px 20px; text-align: center; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.3); }
 .offline-title { color: #dc2626; font-size: 20px; font-weight: bold; margin-bottom: 15px; }
-.offline-text { font-size: 14px; line-height: 1.6; margin-bottom: 20px; }
-.spinner { width: 40px; height: 40px; border: 4px solid var(--line); border-top: 4px solid #dc2626; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto; }
+.offline-text { color: #334155; font-size: 14px; line-height: 1.6; margin-bottom: 20px; }
+.spinner { width: 40px; height: 40px; border: 4px solid #f3f3f3; border-top: 4px solid #dc2626; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto; }
 @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-/* نافذة إدارة البطاقات / العائلات */
+/* Modal إدارة البطاقات */
 .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center; }
 .modal-overlay.active { display: flex; }
-.modal-content { background: var(--card); color: var(--ink); width: 90%; max-width: 450px; border-radius: 16px; padding: 20px; position: relative; border: 1px solid var(--line); }
-.modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid var(--line); padding-bottom: 10px; }
-.family-item { background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+.modal-content { background: white; width: 90%; max-width: 420px; border-radius: 16px; padding: 20px; border: 1px solid var(--line); }
+.family-item { background: #fefce8; border: 1px solid var(--line); border-radius: 10px; padding: 10px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
 </style>
 </head>
 <body>
 
-  <!-- الشاشة 1: الرئيسية لاختيار الخدمة -->
-  <main id="s1">
-    <h1>بوابة المواطن</h1>
-    <div class="sub" id="mainSub">اختر الخدمة المطلوبة</div>
-    <button class="big r" id="gr" type="button">الحصة التموينية</button>
-    <div style="height: 12px;"></div>
-    <button class="big w" id="gw" type="button">حصة الرعاية الاجتماعية</button>
-    <div style="margin-top: 15px;">
-      <button class="main" type="button" onclick="openFamiliesModal()">إدارة البطاقات المسجلة</button>
+<main>
+  <!-- شاشة 1: اختيار الخدمة أو التسجيل لأول مرة -->
+  <div id="screenWelcome">
+    <div class="welcome-box">
+      <h2>بوابة المواطن</h2>
+      <p style="color:var(--mute); margin-bottom: 20px;">اختر نوع الخدمة للمتابعة</p>
+      <button class="big-btn ration" onclick="startLogin('ration')">الحصة التموينية</button>
+      <button class="big-btn welfare" onclick="startLogin('welfare')">حصة الرعاية الاجتماعية</button>
+      <button class="btn-main" style="background:white; color:#b45309; border:1px solid var(--line); margin-top:15px;" onclick="openFamiliesModal()">إدارة البطاقات المسجلة</button>
     </div>
-    <div class="logo"><img alt="شعار الوكالة" src="logo.png"></div>
-  </main>
+  </div>
 
-  <!-- الشاشة 2: تسجيل الدخول -->
-  <main id="s2" hidden>
-    <div class="bar">
-      <button id="b2" type="button" style="padding: 6px 12px;">رجوع</button>
+  <!-- شاشة 2: نموذج إدخال البيانات -->
+  <div id="screenLogin" style="display:none;">
+    <div class="top-bar">
+      <button class="btn-nav" onclick="goHome()">← الرئيسية</button>
     </div>
-    <h1 id="ttl">تسجيل الدخول</h1>
-    <form id="f" autocomplete="off">
-      <label for="nn">اسم رب الأسرة (الاسم الثلاثي كما في البطاقة)</label>
-      <input id="nn" required placeholder="أدخل الاسم الثلاثي">
-      <label for="cd" id="lblCard">رقم البطاقة التموينية</label>
-      <input id="cd" inputmode="numeric" required placeholder="أدخل رقم البطاقة">
-      <button class="main" type="submit" style="margin-top:16px;">دخول وحفظ</button>
-      <div id="m" role="alert"></div>
-    </form>
-    <div class="logo"><img alt="شعار الوكالة" src="logo.png"></div>
-  </main>
+    <h2 id="loginTitle" style="text-align:center; margin-top:15px;">تسجيل البيانات</h2>
+    <div class="info-card" style="margin-top: 15px;">
+      <label>اسم رب الأسرة الثلاثي</label>
+      <input type="text" id="inputName" placeholder="أدخل الاسم الثلاثي">
+      <label style="margin-top: 10px;" id="lblCardType">رقم البطاقة</label>
+      <input type="text" inputmode="numeric" id="inputCard" placeholder="أدخل رقم البطاقة">
+      <button class="btn-main" onclick="saveAndLogin()">دخول وعرض الجدول</button>
+    </div>
+  </div>
 
-  <!-- الشاشة 3: لوحة البيانات والجدول -->
-  <main id="s3" hidden>
-    <div class="bar">
-      <button id="b3" type="button" style="padding: 6px 12px;">تغيير الخدمة</button>
-      <button type="button" onclick="openFamiliesModal()" style="padding: 6px 12px; background: var(--btn); color: var(--btntfg); border-color: var(--btn);">إدارة البطاقات</button>
+  <!-- شاشة 3: لوحة العرض والجدول الشامل -->
+  <div id="screenDashboard" style="display:none;">
+    <div class="top-bar">
+      <button class="btn-nav" onclick="openFamiliesModal()">إدارة البطاقات</button>
+      <button class="btn-nav" onclick="toggleServiceType()"><span id="switchBtnText">تغيير الخدمة</span></button>
     </div>
-    <h1 id="fn">اسم المستفيد</h1>
-    <div class="info">
-      <div><span>رقم البطاقة</span><strong id="icd">-</strong></div>
-      <div><span>نوع الخدمة</span><strong id="isrv">-</strong></div>
-      <div><span>الحالة</span><strong style="color: #16a34a;">مسجل ومفعل ✓</strong></div>
+
+    <div class="citizen-header">
+      <div class="citizen-name" id="dispName">-</div>
     </div>
-    <h2 id="tblTitle">مستحقات الحصة التموينية</h2>
-    <div class="tw">
+
+    <div class="info-card">
+      <div class="info-row">
+        <span class="info-label">رقم البطاقة</span>
+        <span class="info-val" id="dispCard">-</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">نوع الخدمة</span>
+        <span class="info-val" id="dispService">-</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">الحالة</span>
+        <span class="info-val" style="color:#16a34a;">مسجل ومفعل ✓</span>
+      </div>
+    </div>
+
+    <div class="section-title">جدول الحصص الشهريّة</div>
+
+    <div class="table-wrap">
       <table>
         <thead>
           <tr>
-            <th>المادة</th>
-            <th>القرص</th>
-            <th>المقرر</th>
-            <th>المستلم</th>
-            <th>المتبقي</th>
+            <th>الشهر</th>
+            <th>طحين</th>
+            <th>زيت</th>
+            <th>سكر</th>
+            <th>معجون</th>
+            <th>رز</th>
+            <th>بقوليات</th>
+            <th>الأفراد</th>
+            <th>المبلغ</th>
           </tr>
         </thead>
-        <tbody id="tb">
-          <!-- الجدول الأصلي -->
-          <tr><td>الطحين</td><td>كيس</td><td>5</td><td>5</td><td><span class="ck">✓</span></td></tr>
-          <tr><td>التمن (الرز)</td><td>كغ</td><td>3</td><td>3</td><td><span class="ck">✓</span></td></tr>
-          <tr><td>السكر</td><td>كغ</td><td>2</td><td>2</td><td><span class="ck">✓</span></td></tr>
-          <tr><td>زيت الطعام</td><td>لتر</td><td>1</td><td>1</td><td><span class="ck">✓</span></td></tr>
-          <tr><td>معجون الطماطم</td><td>علبة</td><td>2</td><td>2</td><td><span class="ck">✓</span></td></tr>
+        <tbody id="citizenMonthsBody">
+          <!-- يتم إنشاؤه تلقائياً -->
         </tbody>
       </table>
     </div>
-    <div id="up">آخر تحديث: أكتوبر 2026</div>
-  </main>
 
-  <!-- نافذة إدارة البطاقات المسجلة -->
-  <div class="modal-overlay" id="familiesModal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 style="margin:0; font-size:18px;">البطاقات المسجلة</h3>
-        <button type="button" onclick="closeFamiliesModal()" style="border:none; background:none; font-size:20px; cursor:pointer;">✕</button>
-      </div>
-      <div id="familiesList" style="max-height: 250px; overflow-y: auto; margin-bottom: 15px;"></div>
-      <div style="display:flex; flex-direction:column; gap:8px;">
-        <button class="main" type="button" onclick="addNewCardPrompt()">إضافة بطاقة جديدة</button>
-        <button type="button" onclick="closeFamiliesModal()" style="padding: 10px; border-radius: 10px;">إغلاق</button>
-      </div>
-    </div>
+    <button class="btn-main" onclick="saveCitizenTable()">حفظ التعديلات</button>
+    <div style="text-align:center; color:var(--mute); font-size:13px;" id="totalSumDisplay">مجموع المبالغ: 0</div>
   </div>
+</main>
 
-  <!-- نافذة لا يوجد اتصال بالإنترنت -->
-  <div class="offline-modal" id="offlineModal">
-    <div class="offline-box">
-      <div class="offline-title">لا يوجد اتصال بالإنترنت</div>
-      <div class="offline-text">
-        يرجى التأكد من اتصالك بالإنترنت للمتابعة. لن يعمل التطبيق أو يفتح إلا بعد استعادة الاتصال.
-      </div>
-      <div class="spinner"></div>
+<!-- Modal إدارة البطاقات -->
+<div class="modal-overlay" id="familiesModal">
+  <div class="modal-content">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+      <h3 style="margin:0;">البطاقات المسجلة</h3>
+      <button onclick="closeFamiliesModal()" style="border:none; background:none; font-size:20px; cursor:pointer;">✕</button>
     </div>
+    <div id="familiesList" style="max-height:220px; overflow-y:auto; margin-bottom:12px;"></div>
+    <button class="btn-main" onclick="addNewCard()">إضافة بطاقة جديدة</button>
   </div>
+</div>
+
+<!-- نافذة لا يوجد اتصال بالإنترنت -->
+<div class="offline-modal" id="offlineModal">
+  <div class="offline-box">
+    <div class="offline-title">لا يوجد اتصال بالإنترنت</div>
+    <div class="offline-text">يرجى التأكد من اتصالك بالإنترنت للمتابعة. لن يعمل التطبيق إلا بعد استعادة الاتصال.</div>
+    <div class="spinner"></div>
+  </div>
+</div>
 
 <script>
-  let families = JSON.parse(localStorage.getItem('registered_families')) || [];
-  let activeFamilyIndex = localStorage.getItem('active_family_index') !== null ? parseInt(localStorage.getItem('active_family_index')) : -1;
-  let currentService = localStorage.getItem('current_service') || 'ration';
+  const months = ["الأول", "الثاني", "الثالث", "الرابع", "الخامس", "السادس", "السابع", "الثامن", "التاسع", "العاشر", "الحادي عشر", "الثاني عشر"];
+  
+  let families = JSON.parse(localStorage.getItem('citizen_families')) || [];
+  let activeIndex = localStorage.getItem('citizen_active_index') !== null ? parseInt(localStorage.getItem('citizen_active_index')) : -1;
+  let currentService = localStorage.getItem('citizen_service') || 'ration';
+  let selectedServiceType = 'ration';
 
-  // فحص الاتصال بالإنترنت
-  function checkOnlineStatus() {
+  // فحص الاتصال
+  function checkConnection() {
     const modal = document.getElementById('offlineModal');
     if (!navigator.onLine) {
       modal.classList.add('active');
@@ -188,133 +191,151 @@ td:first-child { font-size: 12px; line-height: 1.2; }
       modal.classList.remove('active');
     }
   }
-  window.addEventListener('online', checkOnlineStatus);
-  window.addEventListener('offline', checkOnlineStatus);
-  checkOnlineStatus();
+  window.addEventListener('online', checkConnection);
+  window.addEventListener('offline', checkConnection);
+  checkConnection();
 
-  function saveAppData() {
-    localStorage.setItem('registered_families', JSON.stringify(families));
-    localStorage.setItem('active_family_index', activeFamilyIndex);
-    localStorage.setItem('current_service', currentService);
-  }
-
-  const s1 = document.getElementById('s1');
-  const s2 = document.getElementById('s2');
-  const s3 = document.getElementById('s3');
-
-  function showScreen(screenId) {
-    s1.hidden = (screenId !== 's1');
-    s2.hidden = (screenId !== 's2');
-    s3.hidden = (screenId !== 's3');
+  function saveStorage() {
+    localStorage.setItem('citizen_families', JSON.stringify(families));
+    localStorage.setItem('citizen_active_index', activeIndex);
+    localStorage.setItem('citizen_service', currentService);
   }
 
   function initApp() {
-    if (families.length > 0 && activeFamilyIndex >= 0 && activeFamilyIndex < families.length) {
-      renderDashboard();
+    if (families.length > 0 && activeIndex >= 0 && activeIndex < families.length) {
+      showDashboard();
     } else {
-      showScreen('s1');
+      goHome();
     }
   }
 
-  let selectedServiceForLogin = 'ration';
-
-  document.getElementById('gr').addEventListener('click', () => {
-    selectedServiceForLogin = 'ration';
-    currentService = 'ration';
-    prepareLoginScreen();
-  });
-
-  document.getElementById('gw').addEventListener('click', () => {
-    selectedServiceForLogin = 'welfare';
-    currentService = 'welfare';
-    prepareLoginScreen();
-  });
-
-  function prepareLoginScreen() {
-    document.getElementById('ttl').innerText = selectedServiceForLogin === 'ration' ? 'تسجيل دخول - الحصة التموينية' : 'تسجيل دخول - حصة الرعاية الاجتماعية';
-    document.getElementById('lblCard').innerText = selectedServiceForLogin === 'ration' ? 'رقم البطاقة التموينية' : 'رقم بطاقة الرعاية الاجتماعية';
-    document.getElementById('nn').value = '';
-    document.getElementById('cd').value = '';
-    document.getElementById('m').innerText = '';
-    showScreen('s2');
+  function goHome() {
+    document.getElementById('screenWelcome').style.display = 'block';
+    document.getElementById('screenLogin').style.display = 'none';
+    document.getElementById('screenDashboard').style.display = 'none';
   }
 
-  document.getElementById('b2').addEventListener('click', () => {
-    showScreen('s1');
-  });
-
-  document.getElementById('b3').addEventListener('click', () => {
-    currentService = (currentService === 'ration') ? 'welfare' : 'ration';
-    saveAppData();
-    renderDashboard();
-  });
-
-  document.getElementById('f').addEventListener('submit', (e) => {
-    e.preventDefault();
-    const name = document.getElementById('nn').value.trim();
-    const cardNum = document.getElementById('cd').value.trim();
-
-    if (!name || !cardNum) {
-      document.getElementById('m').innerText = 'يرجى ملء جميع الحقول المطلوبة.';
-      return;
-    }
-
-    let existingIndex = families.findIndex(f => f.cardNum === cardNum);
-    if (existingIndex !== -1) {
-      activeFamilyIndex = existingIndex;
-    } else {
-      families.push({ name, cardNum, service: selectedServiceForLogin });
-      activeFamilyIndex = families.length - 1;
-    }
-    saveAppData();
-    renderDashboard();
-  });
-
-  function renderDashboard() {
-    if (activeFamilyIndex < 0 || activeFamilyIndex >= families.length) {
-      showScreen('s1');
-      return;
-    }
-    const fam = families[activeFamilyIndex];
-    document.getElementById('fn').innerText = fam.name;
-    document.getElementById('icd').innerText = fam.cardNum;
-    document.getElementById('isrv').innerText = (currentService === 'ration') ? 'الحصة التموينية' : 'حصة الرعاية الاجتماعية';
-    document.getElementById('tblTitle').innerText = (currentService === 'ration') ? 'مستحقات الحصة التموينية' : 'مستحقات حصة الرعاية الاجتماعية';
+  function startLogin(service) {
+    selectedServiceType = service;
+    document.getElementById('loginTitle').innerText = service === 'ration' ? 'تسجيل دخول - الحصة التموينية' : 'تسجيل دخول - حصة الرعاية';
+    document.getElementById('lblCardType').innerText = service === 'ration' ? 'رقم البطاقة التموينية' : 'رقم بطاقة الرعاية';
+    document.getElementById('inputName').value = '';
+    document.getElementById('inputCard').value = '';
     
-    const tb = document.getElementById('tb');
-    if (currentService === 'ration') {
-      tb.innerHTML = `
-        <tr><td>الطحين</td><td>كيس</td><td>5</td><td>5</td><td><span class="ck">✓</span></td></tr>
-        <tr><td>التمن (الرز)</td><td>كغ</td><td>3</td><td>3</td><td><span class="ck">✓</span></td></tr>
-        <tr><td>السكر</td><td>كغ</td><td>2</td><td>2</td><td><span class="ck">✓</span></td></tr>
-        <tr><td>زيت الطعام</td><td>لتر</td><td>1</td><td>1</td><td><span class="ck">✓</span></td></tr>
-        <tr><td>معجون الطماطم</td><td>علبة</td><td>2</td><td>2</td><td><span class="ck">✓</span></td></tr>
-      `;
-    } else {
-      tb.innerHTML = `
-        <tr><td>الوجبة الحالية</td><td>وجبة</td><td>1</td><td>1</td><td><span class="ck">✓</span></td></tr>
-        <tr><td>مبلغ الرعاية</td><td>دذار</td><td>مشمول</td><td>مستلم</td><td><span class="ck">✓</span></td></tr>
-      `;
+    document.getElementById('screenWelcome').style.display = 'none';
+    document.getElementById('screenLogin').style.display = 'block';
+  }
+
+  function saveAndLogin() {
+    const name = document.getElementById('inputName').value.trim();
+    const card = document.getElementById('inputCard').value.trim();
+
+    if (!name || !card) {
+      alert('يرجى ملء جميع الحقول المطلوبة');
+      return;
     }
 
-    showScreen('s3');
+    let existing = families.findIndex(f => f.card === card);
+    if (existing !== -1) {
+      activeIndex = existing;
+    } else {
+      families.push({ name, card, service: selectedServiceType, table: {} });
+      activeIndex = families.length - 1;
+    }
+    currentService = selectedServiceType;
+    saveStorage();
+    showDashboard();
+  }
+
+  function showDashboard() {
+    if (activeIndex < 0 || activeIndex >= families.length) {
+      goHome();
+      return;
+    }
+
+    const fam = families[activeIndex];
+    document.getElementById('dispName').innerText = fam.name;
+    document.getElementById('dispCard').innerText = fam.card;
+    document.getElementById('dispService').innerText = currentService === 'ration' ? 'الحصة التموينية' : 'حصة الرعاية الاجتماعية';
+    document.getElementById('switchBtnText').innerText = currentService === 'ration' ? 'التحول للرعاية' : 'التحول للتموينية';
+
+    const tbody = document.getElementById('citizenMonthsBody');
+    tbody.innerHTML = '';
+
+    months.forEach((m, idx) => {
+      let tData = (fam.table && fam.table[idx]) ? fam.table[idx] : {};
+      tbody.innerHTML += `
+        <tr>
+          <td class="month-name">${m}</td>
+          <td><input type="checkbox" id="ct_${idx}_flour" ${tData.flour ? 'checked' : ''}></td>
+          <td><input type="checkbox" id="ct_${idx}_oil" ${tData.oil ? 'checked' : ''}></td>
+          <td><input type="checkbox" id="ct_${idx}_sugar" ${tData.sugar ? 'checked' : ''}></td>
+          <td><input type="checkbox" id="ct_${idx}_paste" ${tData.paste ? 'checked' : ''}></td>
+          <td><input type="checkbox" id="ct_${idx}_rice" ${tData.rice ? 'checked' : ''}></td>
+          <td><input type="checkbox" id="ct_${idx}_legumes" ${tData.legumes ? 'checked' : ''}></td>
+          <td><input type="number" id="ct_${idx}_count" value="${tData.count || ''}"></td>
+          <td><input type="number" id="ct_${idx}_price" value="${tData.price || ''}" onchange="calcCitizenTotal()"></td>
+        </tr>
+      `;
+    });
+
+    calcCitizenTotal();
+    document.getElementById('screenWelcome').style.display = 'none';
+    document.getElementById('screenLogin').style.display = 'none';
+    document.getElementById('screenDashboard').style.display = 'block';
+  }
+
+  function toggleServiceType() {
+    currentService = currentService === 'ration' ? 'welfare' : 'ration';
+    families[activeIndex].service = currentService;
+    saveStorage();
+    showDashboard();
+  }
+
+  function calcCitizenTotal() {
+    let sum = 0;
+    months.forEach((m, idx) => {
+      let val = parseFloat(document.getElementById(`ct_${idx}_price`)?.value) || 0;
+      sum += val;
+    });
+    document.getElementById('totalSumDisplay').innerText = `مجموع المبالغ: ${sum}`;
+    return sum;
+  }
+
+  function saveCitizenTable() {
+    if (activeIndex < 0) return;
+    let tData = {};
+    months.forEach((m, idx) => {
+      tData[idx] = {
+        flour: document.getElementById(`ct_${idx}_flour`).checked,
+        oil: document.getElementById(`ct_${idx}_oil`).checked,
+        sugar: document.getElementById(`ct_${idx}_sugar`).checked,
+        paste: document.getElementById(`ct_${idx}_paste`).checked,
+        rice: document.getElementById(`ct_${idx}_rice`).checked,
+        legumes: document.getElementById(`ct_${idx}_legumes`).checked,
+        count: document.getElementById(`ct_${idx}_count`).value,
+        price: document.getElementById(`ct_${idx}_price`).value,
+      };
+    });
+    families[activeIndex].table = tData;
+    saveStorage();
+    alert('تم حفظ البيانات بنجاح!');
   }
 
   function openFamiliesModal() {
-    const listContainer = document.getElementById('familiesList');
-    listContainer.innerHTML = '';
-
+    const list = document.getElementById('familiesList');
+    list.innerHTML = '';
     if (families.length === 0) {
-      listContainer.innerHTML = '<p style="text-align:center; color:var(--mute);">لا توجد بطاقات مسجلة حالياً.</p>';
+      list.innerHTML = '<p style="text-align:center; color:var(--mute);">لا توجد بطاقات مسجلة.</p>';
     } else {
-      families.forEach((fam, index) => {
-        listContainer.innerHTML += `
-          <div class="family-item" style="${index === activeFamilyIndex ? 'border-color:var(--acc); background:var(--thbg);' : ''}">
-            <div onclick="selectFamily(${index})" style="cursor:pointer; flex:1;">
-              <strong>${fam.name}</strong> ${index === activeFamilyIndex ? '<span style="color:var(--acc); font-size:12px;">(الحالية)</span>' : ''}
-              <div style="font-size:13px; color:var(--mute);">رقم البطاقة: ${fam.cardNum}</div>
+      families.forEach((fam, idx) => {
+        list.innerHTML += `
+          <div class="family-item" style="${idx === activeIndex ? 'border-color:var(--acc); background:#fef3c7;' : ''}">
+            <div onclick="selectCard(${idx})" style="cursor:pointer; flex:1;">
+              <strong>${fam.name}</strong> ${idx === activeIndex ? '<span style="color:var(--acc); font-size:12px;">(الحالية)</span>' : ''}
+              <div style="font-size:13px; color:var(--mute);">الرقم: ${fam.card}</div>
             </div>
-            <button type="button" onclick="deleteFamily(${index})" style="color:var(--bad); border:none; background:none; font-weight:bold; cursor:pointer; padding:5px;">حذف</button>
+            <button onclick="deleteCard(${idx})" style="color:var(--bad); background:none; border:none; font-weight:bold; cursor:pointer;">حذف</button>
           </div>
         `;
       });
@@ -326,33 +347,32 @@ td:first-child { font-size: 12px; line-height: 1.2; }
     document.getElementById('familiesModal').classList.remove('active');
   }
 
-  function selectFamily(index) {
-    activeFamilyIndex = index;
-    saveAppData();
+  function selectCard(idx) {
+    activeIndex = idx;
+    currentService = families[idx].service || 'ration';
+    saveStorage();
     closeFamiliesModal();
-    renderDashboard();
+    showDashboard();
   }
 
-  function deleteFamily(index) {
+  function deleteCard(idx) {
     if (confirm('هل أنت متأكد من حذف هذه البطاقة؟')) {
-      families.splice(index, 1);
-      if (activeFamilyIndex >= families.length) {
-        activeFamilyIndex = families.length - 1;
-      }
-      saveAppData();
+      families.splice(idx, 1);
+      if (activeIndex >= families.length) activeIndex = families.length - 1;
+      saveStorage();
       openFamiliesModal();
       if (families.length === 0) {
         closeFamiliesModal();
-        showScreen('s1');
+        goHome();
       } else {
-        renderDashboard();
+        showDashboard();
       }
     }
   }
 
-  function addNewCardPrompt() {
+  function addNewCard() {
     closeFamiliesModal();
-    showScreen('s1');
+    goHome();
   }
 
   initApp();
