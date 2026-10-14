@@ -255,22 +255,52 @@ td.checked-item { color: #15803d; font-weight: bold; background: #f0fdf4; }
   let targetDeleteIdx = -1;
   let cachedFamilies = [];
 
+  function norm(s){ return String(s||"").replace(/[٠-٩]/g, function(d){ return "٠١٢٣٤٥٦٧٨٩".indexOf(d); }).trim(); }
+
   async function fetchFamiliesFromFirebase() {
     try {
-      let rationList = [];
-      let welfareList = [];
+      let list = [];
+      const cols = [
+        { col: "ration", service: "الحصة التموينية" },
+        { col: "ration_records", service: "الحصة التموينية" },
+        { col: "welfare", service: "الرعاية الاجتماعية" },
+        { col: "welfare_records", service: "الرعاية الاجتماعية" }
+      ];
 
-      const rationSnap = await getDocs(collection(db, "ration_records"));
-      rationSnap.forEach((d) => {
-        rationList.push({ id: d.id, ...d.data(), serviceName: 'الحصة التموينية' });
-      });
+      for (let c of cols) {
+        try {
+          const snap = await getDocs(collection(db, c.col));
+          snap.forEach((d) => {
+            const data = d.data();
+            let parsedT = data.records || {};
+            if (data.tj) {
+              try {
+                const matrix = JSON.parse(data.tj);
+                const HD = c.service === 'الرعاية الاجتماعية' ? ["حليب","طحين","سكر","شاي","زيت"] : ["طحين","زيت","سكر","معجون","رز","بقوليات"];
+                matrix.forEach((row, mIdx) => {
+                  HD.forEach((colName, j) => {
+                    if (row[j] === 1) parsedT[`${mIdx}_${colName}`] = true;
+                  });
+                });
+              } catch(e){}
+            }
 
-      const welfareSnap = await getDocs(collection(db, "welfare_records"));
-      welfareSnap.forEach((d) => {
-        welfareList.push({ id: d.id, ...d.data(), serviceName: 'الرعاية الاجتماعية' });
-      });
+            list.push({
+              id: d.id,
+              colName: c.col,
+              name: data.name || "مواطن",
+              card: norm(data.card || data.c || d.id),
+              members: data.fam || data.members || 10,
+              eligible: data.ent !== undefined ? data.ent : (data.eligible || data.fam || 10),
+              blocked: data.blk !== undefined ? data.blk : (data.blocked || 0),
+              records: parsedT,
+              serviceName: c.service
+            });
+          });
+        } catch(e) {}
+      }
 
-      cachedFamilies = [...rationList, ...welfareList];
+      cachedFamilies = list;
       return cachedFamilies;
     } catch (e) {
       console.error("خطأ في جلب البيانات:", e);
@@ -362,10 +392,8 @@ td.checked-item { color: #15803d; font-weight: bold; background: #f0fdf4; }
   window.executeDelete = async function() {
     if (targetDeleteIdx !== -1 && cachedFamilies[targetDeleteIdx]) {
       const fam = cachedFamilies[targetDeleteIdx];
-      const colName = (fam.serviceName === 'الحصة التموينية') ? 'ration_records' : 'welfare_records';
-      
       try {
-        await deleteDoc(doc(db, colName, fam.id));
+        await deleteDoc(doc(db, fam.colName, fam.id));
       } catch(e) {
         console.error("خطأ الحذف:", e);
       }
@@ -400,8 +428,8 @@ td.checked-item { color: #15803d; font-weight: bold; background: #f0fdf4; }
     const records = fam.records || {};
 
     if (fam.serviceName === 'الرعاية الاجتماعية') {
-      const cols = ["حليب", "شاي", "طحين", "زيت", "سكر"];
-      let html = `<thead><tr><th>الشهر</th><th>حليب</th><th>شاي</th><th>طحين</th><th>زيت</th><th>سكر</th><th>الأفراد</th><th>المبلغ</th></tr></thead><tbody>`;
+      const cols = ["حليب", "طحين", "سكر", "شاي", "زيت"];
+      let html = `<thead><tr><th>الشهر</th><th>حليب</th><th>طحين</th><th>سكر</th><th>شاي</th><th>زيت</th><th>الأفراد</th><th>المبلغ</th></tr></thead><tbody>`;
       
       months.forEach((m, mIdx) => {
         html += `<tr><td class="month-col">${m}</td>`;
@@ -439,9 +467,9 @@ td.checked-item { color: #15803d; font-weight: bold; background: #f0fdf4; }
       document.getElementById('icd').textContent = fam.card;
       document.getElementById('fsub').textContent = fam.serviceName;
       
-      if(document.getElementById('imem')) document.getElementById('imem').textContent = fam.members || 10;
-      if(document.getElementById('ielg')) document.getElementById('ielg').textContent = fam.eligible || fam.members || 10;
-      if(document.getElementById('iblk')) document.getElementById('iblk').textContent = fam.blocked || 0;
+      if(document.getElementById('imem')) document.getElementById('imem').textContent = fam.members;
+      if(document.getElementById('ielg')) document.getElementById('ielg').textContent = fam.eligible;
+      if(document.getElementById('iblk')) document.getElementById('iblk').textContent = fam.blocked;
 
       document.getElementById('cardDetailsBox').style.display = 'block';
       document.getElementById('tblHeading').style.display = 'block';
@@ -600,36 +628,34 @@ td.checked-item { color: #15803d; font-weight: bold; background: #f0fdf4; }
     f.reset();
   };
 
-  /* تعديل دالة الإرسال لتقوم بحفظ البطاقة الجديدة تلقائياً في Firebase إذا لم تكن موجودة */
   f.onsubmit = async (e) => {
     e.preventDefault();
     const nVal = nn.value.trim();
-    const cVal = cd.value.trim();
+    const cVal = norm(cd.value);
     if(!nVal || !cVal) return;
 
     const sName = (mode === 'r') ? 'الحصة التموينية' : 'الرعاية الاجتماعية';
-    const colName = (mode === 'r') ? 'ration_records' : 'welfare_records';
+    const colName = (mode === 'r') ? 'ration' : 'welfare';
     let families = await fetchFamiliesFromFirebase();
 
-    let existingIndex = families.findIndex(fam => fam.card === cVal && fam.serviceName === sName);
+    let existingIndex = families.findIndex(fam => (fam.card === cVal || fam.id === cVal) && fam.serviceName === sName);
     
     if (existingIndex !== -1) {
       activeIndex = existingIndex;
     } else {
-      // إذا لم تكن موجودة، قم بإنشائها وحفظها مباشرة في قاعدة البيانات السحابية
       const newCardData = {
         name: nVal,
         card: cVal,
-        members: 10,
-        eligible: 10,
-        blocked: 0,
+        fam: 10,
+        ent: 10,
+        blk: 0,
         records: {}
       };
       
       try {
         await setDoc(doc(db, colName, cVal), newCardData);
         families = await fetchFamiliesFromFirebase();
-        activeIndex = families.findIndex(fam => fam.card === cVal && fam.serviceName === sName);
+        activeIndex = families.findIndex(fam => (fam.card === cVal || fam.id === cVal) && fam.serviceName === sName);
       } catch (err) {
         console.error("خطأ في حفظ البطاقة الجديدة:", err);
       }
