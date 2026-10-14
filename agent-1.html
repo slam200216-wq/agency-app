@@ -3,61 +3,50 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>إدارة الوكالة وبوابة المواطن</title>
+<title>إدارة الوكالة</title>
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#FBF3E2;--card:#FFFFFF;--ink:#1B1610;--mute:#7C6A50;--line:#E9D9B8;--acc:#A5560A;--btn:#F5A524;--btnfg:#1B1610;--thbg:#FFEFCB;--bad:#B93A2B}
-* { box-sizing: border-box; font-family: Tajawal, Tahoma, Arial, sans-serif; direction: rtl; }
-body { margin: 0; background: var(--bg); color: var(--ink); font-size: 17px; line-height: 1.6; padding: 16px; padding-bottom: 84px; }
-main { max-width: 640px; margin: 0 auto; }
-h1 { font-size: 24px; margin: 8px 0 12px; }
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Tajawal,Tahoma,Arial,sans-serif;font-size:17px;line-height:1.6;padding:16px 16px 84px 16px}
+main{max-width:640px;margin:0 auto}
+h1{font-size:24px;margin:8px 0 12px}
 .stats{display:flex;gap:10px;margin-bottom:14px}
 .stat{flex:1;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
 .stat b{display:block;font-size:26px;color:var(--acc);line-height:1.2}
 .stat span{color:var(--mute);font-size:14px}
 form,.row{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px}
 label{display:block;font-weight:500;margin:10px 0 4px}
-input,textarea{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px 12px}
+input{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px 12px}
 .two{display:flex;gap:10px}.two>div{flex:1}
 button{font:inherit;font-weight:500;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:9px 14px;cursor:pointer}
 button.main{background:var(--btn);color:var(--btnfg);border-color:var(--btn)}
 button.bad{color:var(--bad);border-color:var(--bad)}
 .acts{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
-#msg{min-height:24px;margin-top:8px;font-size:15px;color:var(--bad)}
 .search{margin:18px 0 10px;position:relative}
 .row{margin-bottom:8px;display:flex;justify-content:space-between;gap:10px;align-items:center}
 .row h3{margin:0;font-size:18px}
 .row p{margin:2px 0 0;color:var(--mute);font-size:15px}
-.empty{text-align:center;color:var(--mute);padding:24px 8px}
 .num{direction:ltr;unicode-bidi:embed}
-.lk{color:var(--acc);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.lk{color:var(--acc);text-decoration:underline;cursor:pointer}
 [hidden]{display:none!important}
 .info{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:4px 14px;margin-bottom:16px}
 .info div{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line)}
 .info div:last-child{border:0}
-.info span{color:var(--mute)}
-h2{font-size:19px;margin:20px 0 10px}
 .tw{overflow-x:auto;background:var(--card);border:1px solid var(--line);border-radius:10px}
-table{width:100%;border-collapse:collapse;text-align:center;font-size:15px}
-th{background:var(--thbg);color:var(--acc);padding:8px 4px;font-size:14px}
-td,th{border:1px solid var(--line)}
-td{padding:6px 3px}
-td input[type=checkbox]{width:22px;height:22px;accent-color:var(--btn)}
-td input[type=number]{width:72px;text-align:center;padding:6px 4px}
-.lg{position:fixed;inset:0;z-index:50;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:20px}
-.lgb{width:100%;max-width:360px;background:var(--card);padding:20px;border-radius:14px;border:1px solid var(--line)}
-.nav{position:fixed;left:0;right:0;bottom:0;display:flex;background:var(--card);border-top:3px solid var(--btn);z-index:5}
-.nav button{flex:1;border:0;border-radius:0;background:transparent;display:flex;flex-direction:column;align-items:center;gap:3px;padding:9px 2px 8px;font-size:11px;color:var(--mute)}
-.nav button.on{color:var(--acc);font-weight:700}
-#qx{position:absolute;inset-inline-end:7px;top:50%;transform:translateY(-50%);width:32px;height:32px;padding:0;border:0;border-radius:50%;background:var(--line);color:var(--ink);font-size:22px;line-height:1}
+table{width:100%;border-collapse:collapse;text-align:center;font-size:14px}
+th{background:var(--thbg);color:var(--acc);padding:8px 4px}
+td,th{border:1px solid var(--line);padding:6px 3px}
+td input[type=checkbox]{width:20px;height:20px;accent-color:var(--btn)}
+td input[type=number]{width:60px;text-align:center;padding:4px}
 </style>
 </head>
 <body>
 
 <main id="home">
-<h1 style="margin-bottom:2px">عبد السلام سعد نجم عبوش</h1>
-<div id="ssub" style="color:var(--mute);margin-bottom:12px">إدارة الوكالة والحصة التموينية</div>
-<div class="search"><input id="q" placeholder="ابحث بالاسم أو رقم البطاقة" style="padding-inline-end:46px"><button id="qx" type="button" hidden>×</button></div>
+<h1>عبد السلام سعد نجم عبوش</h1>
+<div style="color:var(--mute);margin-bottom:12px">إدارة الوكالة - الحصة التموينية</div>
+<div class="search"><input id="q" placeholder="ابحث بالاسم أو رقم البطاقة"><button id="qx" type="button" hidden style="position:absolute;left:10px;top:10px;border:none;background:none;font-size:20px;cursor:pointer">×</button></div>
 <button class="main" id="addb" type="button" style="width:100%;margin-bottom:12px">إضافة عائلة جديدة</button>
 <form id="f" autocomplete="off" hidden>
   <label for="n">اسم المواطن</label>
@@ -67,10 +56,9 @@ td input[type=number]{width:72px;text-align:center;padding:6px 4px}
     <div><label for="k">عدد الأفراد</label><input id="k" type="number" min="1" max="50" inputmode="numeric" required></div>
   </div>
   <div class="acts">
-    <button class="main" id="save" type="submit">إضافة عائلة</button>
+    <button class="main" id="save" type="submit">حفظ العائلة</button>
     <button type="button" id="cancel">إلغاء</button>
   </div>
-  <div id="msg"></div>
 </form>
 <div class="stats">
   <div class="stat"><b id="sc">0</b><span>عدد العوائل</span></div>
@@ -80,175 +68,188 @@ td input[type=number]{width:72px;text-align:center;padding:6px 4px}
 </main>
 
 <main id="det" hidden>
-<button id="back" type="button">رجوع إلى القائمة</button>
+<button id="back" type="button">← الرجوع للقائمة</button>
 <h1 id="dn"></h1>
 <div class="info" id="di"></div>
-<div class="acts" style="margin:0 0 10px"><button id="eb" type="button">تعديل البيانات</button><button id="db" class="bad" type="button">حذف المواطن</button></div>
-<div class="two" id="ef" hidden style="background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:12px">
-  <div><label for="en">الاسم</label><input id="en"></div>
-  <div><label for="ec">رقم البطاقة</label><input id="ec" inputmode="numeric"></div>
-  <div><label for="ek">عدد الأفراد</label><input id="ek" type="number" min="1"></div>
-  <div class="acts"><button class="main" id="es" type="button">حفظ</button><button id="ex" type="button">إلغاء</button></div>
-</div>
 <h2>جدول الحصص الشهرية</h2>
 <div class="tw"><table><thead><tr id="thr"></tr></thead><tbody id="tb"></tbody></table></div>
-<div class="acts"><button class="main" id="tsave" type="button">حفظ جدول الحصص الشهرية</button></div>
-<div id="tm" style="margin-top:8px"></div>
+<div class="acts"><button class="main" id="tsave" type="button" style="width:100%;margin-top:10px">حفظ التأشيرات والحصص</button></div>
+<div id="tm" style="margin-top:8px;font-weight:bold"></div>
 </main>
-
-<nav class="nav" id="nav" aria-label="التنقل">
-<button id="homeb" type="button" class="on"><span>الرئيسية</span></button>
-</nav>
-
-<script>window.FBready=new Promise(function(r){window._fbr=r})</script>
-<script type="module">
-import {initializeApp} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
-import {getAuth,signInWithEmailAndPassword,onAuthStateChanged} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
-import {getFirestore,collection,doc,getDoc,getDocs,writeBatch,setDoc} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
-import {firebaseConfig} from "./firebase-config.js";
-const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app);
-window._fbr({auth,db,signIn:(e,p)=>signInWithEmailAndPassword(auth,e,p),onAuth:cb=>onAuthStateChanged(auth,cb),collection,doc,getDoc,getDocs,writeBatch,setDoc});
-</script>
-
-<div class="lg" id="lg"><div class="lgb"><h2>تسجيل دخول الوكيل</h2><input id="le" type="email" placeholder="البريد الإلكتروني" style="margin-bottom:8px"><input id="lp" type="password" placeholder="كلمة المرور"><button class="main" id="lgo" type="button" style="width:100%;margin-top:10px">دخول</button><div id="lm" style="color:var(--bad);margin-top:8px"></div></div></div>
 
 <script>
 (function(){
-var KEY="citizens-v1",data=[],editing=null;
-var SEED=[
+var KEY="ration_records";
+var ALL_CITIZENS = [
   {id:"c_0",name:"ابراهیم حسن محمد",card:"5905963",fam:7},
   {id:"c_1",name:"ابراهیم زیدان خلف",card:"5058412",fam:4},
   {id:"c_2",name:"ابراهیم صالح محمود",card:"5779453",fam:3},
   {id:"c_3",name:"ابراهيم علي حسين",card:"4441293",fam:3},
   {id:"c_4",name:"ابراهیم محمد خلف",card:"4994952",fam:7},
-  {id:"c_5",name:"ابراهيم محمد سعيد",card:"4994806",fam:2},
-  {id:"c_6",name:"احمد ابراهيم محمد",card:"5430852",fam:1},
-  {id:"c_7",name:"احمد خضر خلف",card:"5501869",fam:7},
-  {id:"c_8",name:"احمد رجب احمد",card:"5236760",fam:5},
-  {id:"c_9",name:"احمد رمضان خضر",card:"5301140",fam:4},
-  {id:"c_10",name:"احمد زيدان خلف",card:"5058414",fam:6},
-  {id:"c_11",name:"احمد صالح محمود",card:"5779454",fam:3},
-  {id:"c_12",name:"احمد صبار مخلف",card:"5430855",fam:5},
-  {id:"c_13",name:"احمد ضاحي عاكول",card:"5068222",fam:2},
-  {id:"c_14",name:"احمد عزيز حسن",card:"5069774",fam:5},
-  {id:"c_15",name:"احمد عطيه ذياب",card:"5320573",fam:3},
-  {id:"c_16",name:"احمد عمر حمد",card:"5737408",fam:6},
-  {id:"c_17",name:"احمد فتحي احمد",card:"5229604",fam:6},
-  {id:"c_18",name:"احمد فيصل حسين",card:"5063073",fam:4},
-  {id:"c_19",name:"احمد محمد احمد",card:"5666755",fam:5},
-  {id:"c_20",name:"احمد محمد حسن",card:"4994809",fam:5},
-  {id:"c_21",name:"احمد محمد خلف",card:"4994953",fam:3},
-  {id:"c_22",name:"احمد محمد رجب",card:"5236762",fam:1},
-  {id:"c_23",name:"احمد محمد صالح",card:"5483256",fam:3},
-  {id:"c_24",name:"احمد محمد ظاهر",card:"5058418",fam:2},
-  {id:"c_25",name:"احمد محمود ابراهيم",card:"5069776",fam:6},
-  {id:"c_26",name:"احمد محمود حسن",card:"4994811",fam:3},
-  {id:"c_27",name:"احمد محمود خلف",card:"5564344",fam:3},
-  {id:"c_28",name:"احمد محمود طه",card:"5492471",fam:5},
-  {id:"c_29",name:"احمد مخلف حسن",card:"5109278",fam:4},
-  {id:"c_30",name:"احمد مصعب احمد",card:"5063074",fam:2},
-  {id:"c_31",name:"احمد مهيدي صالح",card:"5068224",fam:4},
-  {id:"c_32",name:"احمد نوري خضر",card:"5737411",fam:3},
-  {id:"c_33",name:"احمد ولي خلف",card:"5430858",fam:4},
-  {id:"c_34",name:"اسماعيل خضر خلف",card:"5501872",fam:5},
-  {id:"c_35",name:"اسماعيل رجب احمد",card:"5236765",fam:4},
-  {id:"c_36",name:"اسماعيل رمضان خضر",card:"5301143",fam:3},
-  {id:"c_37",name:"اسماعيل ضاحي عاكول",card:"5068225",fam:4},
-  {id:"c_38",name:"اسماعيل عزيز حسن",card:"5069778",fam:3},
-  {id:"c_39",name:"اسماعيل عطيه ذياب",card:"5320575",fam:5},
-  {id:"c_40",name:"اسماعيل عمر حمد",card:"5737413",fam:4},
-  {id:"c_41",name:"اسماعيل فتحي احمد",card:"5229606",fam:3},
-  {id:"c_42",name:"اسماعيل فيصل حسين",card:"5063076",fam:6},
-  {id:"c_43",name:"اسماعيل محمد احمد",card:"5666758",fam:2},
-  {id:"c_44",name:"اسماعيل محمد حسن",card:"4994813",fam:5},
-  {id:"c_45",name:"اسماعيل محمد خلف",card:"4994955",fam:4},
-  {id:"c_46",name:"اسماعيل محمد رجب",card:"5236767",fam:3},
-  {id:"c_47",name:"اسماعيل محمد صالح",card:"5483259",fam:5},
-  {id:"c_48",name:"اسماعيل محمد ظاهر",card:"5058421",fam:4},
-  {id:"c_49",name:"اسماعيل محمود ابراهيم",card:"5069780",fam:3},
-  {id:"c_50",name:"اسماعيل محمود حسن",card:"4994815",fam:5},
-  {id:"c_51",name:"اسماعيل محمود خلف",card:"5564347",fam:4},
-  {id:"c_52",name:"اسماعيل محمود طه",card:"5492474",fam:3},
-  {id:"c_53",name:"اسماعيل مخلف حسن",card:"5109281",fam:6},
-  {id:"c_54",name:"اسماعيل مصعب احمد",card:"5063077",fam:2},
-  {id:"c_55",name:"اسماعيل مهيدي صالح",card:"5068227",fam:5},
-  {id:"c_56",name:"اسماعيل نوري خضر",card:"5737415",fam:4},
-  {id:"c_57",name:"اسماعيل ولي خلف",card:"5430861",fam:3}
+  {id:"c_5",name:"ابراهیم محمد سلمان",card:"10005489",fam:2},
+  {id:"c_6",name:"احلية جاسم ملحم",card:"4890616",fam:1},
+  {id:"c_7",name:"احمد اسماعیل جاسم",card:"5568717",fam:5},
+  {id:"c_8",name:"احمد ایوب محمد",card:"4569475",fam:4},
+  {id:"c_9",name:"احمد زیدان خلف",card:"5593303",fam:9},
+  {id:"c_10",name:"احمد صالح محمود",card:"5779454",fam:3},
+  {id:"c_11",name:"احمد صبار مخلف",card:"5430855",fam:5},
+  {id:"c_12",name:"احمد ضاحي عاكول",card:"5068222",fam:2},
+  {id:"c_13",name:"احمد عزيز حسن",card:"5069774",fam:5},
+  {id:"c_14",name:"احمد عطيه ذياب",card:"5320573",fam:3},
+  {id:"c_15",name:"احمد عمر حمد",card:"5737408",fam:6},
+  {id:"c_16",name:"احمد فتحي احمد",card:"5229604",fam:6},
+  {id:"c_17",name:"احمد فيصل حسين",card:"5063073",fam:4},
+  {id:"c_18",name:"احمد محمد احمد",card:"5666755",fam:5},
+  {id:"c_19",name:"احمد محمد حسن",card:"4994809",fam:5},
+  {id:"c_20",name:"احمد محمد خلف",card:"4994953",fam:3},
+  {id:"c_21",name:"احمد محمد رجب",card:"5236762",fam:1},
+  {id:"c_22",name:"احمد محمد صالح",card:"5483256",fam:3},
+  {id:"c_23",name:"احمد محمد ظاهر",card:"5058418",fam:2},
+  {id:"c_24",name:"احمد محمود ابراهيم",card:"5069776",fam:6},
+  {id:"c_25",name:"احمد محمود حسن",card:"4994811",fam:3},
+  {id:"c_26",name:"احمد محمود خلف",card:"5564344",fam:3},
+  {id:"c_27",name:"احمد محمود طه",card:"5492471",fam:5},
+  {id:"c_28",name:"احمد مخلف حسن",card:"5109278",fam:4},
+  {id:"c_29",name:"احمد مصعب احمد",card:"5063074",fam:2},
+  {id:"c_30",name:"احمد مهيدي صالح",card:"5068224",fam:4},
+  {id:"c_31",name:"احمد نوري خضر",card:"5737411",fam:3},
+  {id:"c_32",name:"احمد ولي خلف",card:"5430858",fam:4},
+  {id:"c_33",name:"اسماعيل خضر خلف",card:"5501872",fam:5},
+  {id:"c_34",name:"اسماعيل رجب احمد",card:"5236765",fam:4},
+  {id:"c_35",name:"اسماعيل رمضان خضر",card:"5301143",fam:3},
+  {id:"c_36",name:"اسماعيل ضاحي عاكول",card:"5068225",fam:4},
+  {id:"c_37",name:"اسماعيل عزيز حسن",card:"5069778",fam:3},
+  {id:"c_38",name:"اسماعيل عطيه ذياب",card:"5320575",fam:5},
+  {id:"c_39",name:"اسماعيل عمر حمد",card:"5737413",fam:4},
+  {id:"c_40",name:"اسماعيل فتحي احمد",card:"5229606",fam:3},
+  {id:"c_41",name:"اسماعيل فيصل حسين",card:"5063076",fam:6},
+  {id:"c_42",name:"اسماعيل محمد احمد",card:"5666758",fam:2},
+  {id:"c_43",name:"اسماعيل محمد حسن",card:"4994813",fam:5},
+  {id:"c_44",name:"اسماعيل محمد خلف",card:"4994955",fam:4},
+  {id:"c_45",name:"اسماعيل محمد رجب",card:"5236767",fam:3},
+  {id:"c_46",name:"اسماعيل محمد صالح",card:"5483259",fam:5},
+  {id:"c_47",name:"اسماعيل محمد ظاهر",card:"5058421",fam:4},
+  {id:"c_48",name:"اسماعيل محمود ابراهيم",card:"5069780",fam:3},
+  {id:"c_49",name:"اسماعيل محمود حسن",card:"4994815",fam:5},
+  {id:"c_50",name:"اسماعيل محمود خلف",card:"5564347",fam:4},
+  {id:"c_51",name:"اسماعيل محمود طه",card:"5492474",fam:3},
+  {id:"c_52",name:"اسماعيل مخلف حسن",card:"5109281",fam:6},
+  {id:"c_53",name:"اسماعيل مصعب احمد",card:"5063077",fam:2},
+  {id:"c_54",name:"اسماعيل مهيدي صالح",card:"5068227",fam:5},
+  {id:"c_55",name:"اسماعيل نوري خضر",card:"5737415",fam:4},
+  {id:"c_56",name:"اسماعيل ولي خلف",card:"5430861",fam:3}
 ];
 
+var data = [];
 var $=function(i){return document.getElementById(i)};
-function load(){try{var r=localStorage.getItem(KEY);data=r?JSON.parse(r):[]}catch(e){data=[]}if(!Array.isArray(data)||!data.length){data=SEED.map(function(x){return Object.assign({},x)});store()}}
-function store(){try{localStorage.setItem(KEY,JSON.stringify(data));push();return true}catch(e){return false}}
-function norm(s){return String(s||"").replace(/[٠-٩]/g,function(d){return "٠١٢٣٤٥٦٧٨٩".indexOf(d)}).trim()}
 
-function render(){
-  $("qx").hidden=!$("q").value;
-  var q=norm($("q").value).toLowerCase(),L=$("list");L.innerHTML="";
-  var rows=data.filter(function(x){return !q||x.name.toLowerCase().indexOf(q)>-1||x.card.indexOf(q)>-1});
-  $("sc").textContent=data.length;
-  $("sp").textContent=data.reduce(function(a,x){return a+x.fam},0);
-  if(!rows.length){var e=document.createElement("div");e.className="empty";e.textContent="لا توجد نتائج مطابقة";L.appendChild(e);return}
-  rows.forEach(function(x){
-    var r=document.createElement("div");r.className="row";
-    var t=document.createElement("div"),h=document.createElement("h3"),p=document.createElement("p"),s=document.createElement("span");
-    h.textContent=x.name;h.className="lk";h.onclick=function(){show(x.id)};s.className="num";s.textContent=x.card;
-    p.appendChild(document.createTextNode("بطاقة رقم "));p.appendChild(s);p.appendChild(document.createTextNode(" - "+x.fam+" أفراد"));
-    t.appendChild(h);t.appendChild(p);r.appendChild(t);L.appendChild(r);
-  })
+function load(){
+  try{
+    var r=localStorage.getItem(KEY);
+    data=r?JSON.parse(r):[];
+  }catch(e){data=[]}
+  if(!Array.isArray(data) || data.length === 0){
+    data = ALL_CITIZENS.map(function(x){ return Object.assign({}, x, {members: x.fam, records: {}}); });
+    store();
+  }
 }
 
-$("f").onsubmit=function(ev){
-  ev.preventDefault();
-  var name=$("n").value.trim(),card=norm($("c").value),fam=parseInt(norm($("k").value),10);
-  if(!name||!card||!(fam>0))return;
-  data.unshift({id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),name:name,card:card,fam:fam});
-  if(store()){$("f").reset();$("f").hidden=true;render();}
-};
-$("cancel").onclick=function(){$("f").hidden=true};
-$("addb").onclick=function(){var f=$("f");f.hidden=!f.hidden};
-$("q").oninput=render;
-$("qx").onclick=function(){$("q").value="";render();};
-
-var MN=["الأول","الثاني","الثالث","الرابع","الخامس","السادس","السابع","الثامن","التاسع","العاشر","الحادي عشر","الثاني عشر"],HD=["طحين","زيت","سكر","معجون","رز","بقوليات"],cur=null;
-function mk(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e}
-
-function show(id){
-  var x=data.filter(function(y){return y.id===id})[0];if(!x)return;cur=x;
-  $("home").hidden=true;$("det").hidden=false;$("dn").textContent=x.name;
-  var di=$("di");di.innerHTML="";
-  [["رقم البطاقة",x.card],["عدد الأفراد",x.fam]].forEach(function(r){
-    var d=mk("div");d.appendChild(mk("span","",r[0]));d.appendChild(mk("b","num",r[1]));di.appendChild(d);
-  });
-  var tb=$("tb");tb.innerHTML="";var thr=$("thr");thr.innerHTML="";
-  ["الشهر"].concat(HD).concat(["الأفراد","المبلغ"]).forEach(function(t){thr.appendChild(mk("th","",t))});
-  MN.forEach(function(m,i){
-    var row=(x.t&&x.t[i])||[],tr=mk("tr");tr.appendChild(mk("td","",m));
-    for(var j=0;j<HD.length;j++){var td=mk("td"),c=document.createElement("input");c.type="checkbox";c.checked=!!row[j];td.appendChild(c);tr.appendChild(td)}
-    var tf=mk("td"),f=document.createElement("input");f.type="number";f.value=row[7]||"";tf.appendChild(f);tr.appendChild(tf);
-    var ta=mk("td"),n=document.createElement("input");n.type="number";n.value=row[6]||"";ta.appendChild(n);tr.appendChild(ta);tb.appendChild(tr);
-  });
-}
-$("tsave").onclick=function(){
-  var t=[];
-  [].forEach.call($("tb").rows,function(tr){var q=tr.querySelectorAll("input"),r=[];for(var j=0;j<6;j++)r.push(q[j].checked?1:0);r.push(parseFloat(q[7].value)||0);r.push(parseInt(q[6].value,10)||null);t.push(r);});
-  cur.t=t;store();show(cur.id);
-  $("tm").style.color="var(--acc)";$("tm").textContent="تم الحفظ بنجاح ✓";
-};
-$("back").onclick=function(){cur=null;$("det").hidden=true;$("home").hidden=false;render();};
-
-var FB=null,sec="ration";
-function push(){try{if(FB&&FB.auth.currentUser){var b=FB.writeBatch(FB.db);data.forEach(function(f){b.set(FB.doc(FB.db,sec,f.id),f);});b.commit();}}catch(e){}}
-async function pull(){
-  if(!FB||!FB.auth.currentUser)return;
-  try{var q=await FB.getDocs(FB.collection(FB.db,sec)),arr=[];
-    q.forEach(function(d){arr.push(d.data());});
-    if(arr.length){data=arr;render();}
+function store(){
+  try{
+    localStorage.setItem(KEY, JSON.stringify(data));
   }catch(e){}
 }
-window.FBready.then(function(f){FB=f;f.onAuth(function(u){$("lg").hidden=!!u;if(u)pull();});});
-$("lgo").onclick=async function(){try{await FB.signIn($("le").value.trim(),$("lp").value);$("lg").hidden=true;}catch(e){$("lm").textContent="خطأ في تسجيل الدخول.";}};
 
-load();render();
+function render(){
+  var q = ($("q").value || "").trim().toLowerCase();
+  $("qx").hidden = !q;
+  var L = $("list"); L.innerHTML = "";
+  var rows = data.filter(function(x){
+    return !q || x.name.toLowerCase().indexOf(q) > -1 || x.card.indexOf(q) > -1;
+  });
+  $("sc").textContent = data.length;
+  $("sp").textContent = data.reduce(function(a,x){return a + (x.fam||x.members||0);}, 0);
+
+  if(!rows.length){
+    L.innerHTML = "<div style='text-align:center;padding:20px;color:var(--mute)'>لا توجد نتائج مطابقة</div>";
+    return;
+  }
+
+  rows.forEach(function(x){
+    var r = document.createElement("div"); r.className = "row";
+    r.innerHTML = "<div><h3 class='lk'>" + x.name + "</h3><p>بطاقة رقم <span class='num'>" + x.card + "</span> - " + (x.fam||x.members) + " أفراد</p></div>";
+    r.querySelector("h3").onclick = function(){ show(x.id || x.card); };
+    L.appendChild(r);
+  });
+}
+
+$("f").onsubmit = function(e){
+  e.preventDefault();
+  var n = $("n").value.trim(), c = $("c").value.trim(), k = parseInt($("k").value, 10);
+  if(!n || !c || !k) return;
+  data.unshift({id: "c_" + Date.now(), name: n, card: c, fam: k, members: k, records: {}});
+  store();
+  $("f").reset(); $("f").hidden = true; render();
+};
+
+$("addb").onclick = function(){ $("f").hidden = !$("f").hidden; };
+$("cancel").onclick = function(){ $("f").hidden = true; };
+$("q").oninput = render;
+$("qx").onclick = function(){ $("q").value = ""; render(); };
+
+var cur = null;
+var MN = ["الأول","الثاني","الثالث","الرابع","الخامس","السادس","السابع","الثامن","التاسع","العاشر","الحادي عشر","الثاني عشر"];
+var HD = ["طحين","زيت","سكر","معجون","رز","بقوليات"];
+
+function show(id){
+  cur = data.find(function(y){ return y.id === id || y.card === id; });
+  if(!cur) return;
+  $("home").hidden = true; $("det").hidden = false;
+  $("dn").textContent = cur.name;
+  $("di").innerHTML = "<div><span>رقم البطاقة:</span><b>" + cur.card + "</b></div><div><span>عدد الأفراد:</span><b>" + (cur.fam||cur.members) + "</b></div>";
+  
+  var thr = $("thr"); thr.innerHTML = "<th>الشهر</th>";
+  HD.forEach(function(h){ thr.innerHTML += "<th>" + h + "</th>"; });
+  thr.innerHTML += "<th>المبلغ</th>";
+
+  var tb = $("tb"); tb.innerHTML = "";
+  cur.records = cur.records || {};
+
+  MN.forEach(function(m, i){
+    var tr = document.createElement("tr");
+    var html = "<td>" + m + "</td>";
+    HD.forEach(function(col){
+      var isChecked = cur.records[i + "_" + col] ? "checked" : "";
+      html += "<td><input type='checkbox' data-m='" + i + "' data-c='" + col + "' " + isChecked + "></td>";
+    });
+    var pr = cur.records[i + "_price"] || "";
+    html += "<td><input type='number' data-m='" + i + "' data-p='1' value='" + pr + "'></td>";
+    tr.innerHTML = html;
+    tb.appendChild(tr);
+  });
+}
+
+$("tsave").onclick = function(){
+  if(!cur) return;
+  cur.records = cur.records || {};
+  var inputs = $("tb").querySelectorAll("input");
+  inputs.forEach(function(inp){
+    var m = inp.dataset.m;
+    if(inp.type === "checkbox"){
+      var c = inp.dataset.c;
+      cur.records[m + "_" + c] = inp.checked;
+    } else if(inp.dataset.p){
+      cur.records[m + "_price"] = inp.value;
+    }
+  });
+  store();
+  $("tm").style.color = "var(--acc)";
+  $("tm").textContent = "تم حفظ التغيرات والتأشيرات بنجاح ✓";
+};
+
+$("back").onclick = function(){ $("det").hidden = true; $("home").hidden = false; render(); };
+
+load(); render();
 })();
 </script>
 </body>
