@@ -19,6 +19,7 @@
   --thfg: #a36209;
 }
 
+/* ثيم الرعاية الاجتماعية (الأزرق) */
 body.welfare-theme {
   --acc: #1d4ed8;
   --btn: #2563eb;
@@ -46,6 +47,7 @@ input { width: 100%; font: inherit; color: var(--ink); background: #fff; border:
 .logo { flex: 1; position: relative; min-height: 200px; margin-top: 8px; }
 .logo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
 
+/* الشريط العلوي */
 .top-bar-s3 { display: flex; justify-content: flex-start; align-items: center; margin-bottom: 12px; min-height: 40px; }
 .btn-exit { background: #fff; border: 1px solid var(--line); padding: 8px 16px; border-radius: 12px; font-size: 16px; cursor: pointer; color: var(--ink); display: flex; align-items: center; gap: 6px; }
 
@@ -61,27 +63,22 @@ input { width: 100%; font: inherit; color: var(--ink); background: #fff; border:
 .tbl-heading { font-size: 20px; font-weight: 700; text-align: right; margin: 0 0 14px 0; color: #1B1610; }
 
 .tw { border: 1px solid var(--line); border-radius: 14px; overflow: hidden; background: #fff; }
-table { width: 100%; border-collapse: collapse; text-align: center; font-size: 12px; table-layout: fixed; direction: rtl; }
-th { background: var(--thbg); color: var(--thfg); padding: 8px 1px; font-size: 11px; font-weight: bold; border: 1px solid var(--line); text-align: center; }
-td { border: 1px solid var(--line); padding: 6px 1px; color: var(--ink); height: 32px; text-align: center; font-size: 11px; }
-td.month-col { color: var(--mute); font-weight: 500; font-size: 11px; background: #fffdf8; }
+table { width: 100%; border-collapse: collapse; text-align: center; font-size: 13px; table-layout: fixed; direction: rtl; }
+th { background: var(--thbg); color: var(--thfg); padding: 8px 1px; font-size: 12px; font-weight: bold; border: 1px solid var(--line); text-align: center; }
+td { border: 1px solid var(--line); padding: 7px 1px; color: var(--ink); height: 32px; text-align: center; }
+td.month-col { color: var(--mute); font-weight: 500; font-size: 12px; background: #fffdf8; }
 body.welfare-theme td.month-col { background: #f8fafc; }
-td.checked-item { color: #15803d; font-weight: bold; background: #f0fdf4; }
 
 .footer-up { color: var(--mute); font-size: 13px; text-align: right; margin-top: 14px; }
 
+/* شريط التنقل السفلي */
 .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; height: 65px; background: #fff; border-top: 1px solid var(--line); display: flex; justify-content: space-around; align-items: center; z-index: 2000; box-shadow: 0 -2px 10px rgba(0,0,0,0.04); }
-.nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; height: 100%; color: var(--mute); background: none; border: none; border-radius: 0; cursor: pointer; padding: 4px 0; gap: 3px; position: relative; }
+.nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; height: 100%; color: var(--mute); background: none; border: none; border-radius: 0; cursor: pointer; padding: 4px 0; gap: 3px; }
 .nav-item.active { color: var(--acc); font-weight: bold; }
 .nav-icon { width: 22px; height: 22px; fill: currentColor; }
-.nav-label { font-size: 11px; }
+.nav-label { font-size: 12px; }
 
-.news-list { display: flex; flex-direction: column; gap: 12px; margin-top: 10px; }
-.news-card { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.02); text-align: right; }
-.news-title { font-weight: bold; font-size: 16px; color: var(--ink); margin-bottom: 6px; }
-.news-desc { font-size: 14px; color: #334155; line-height: 1.5; margin-bottom: 8px; }
-.news-date { font-size: 12px; color: var(--mute); }
-
+/* القائمة الجانبية (Drawer) */
 .drawer-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 2500; }
 .drawer-overlay.active { display: block; }
 .side-drawer { position: fixed; top: 0; left: -300px; width: 280px; height: 100%; background: #fff; z-index: 3000; box-shadow: 4px 0 15px rgba(0,0,0,0.1); transition: left 0.3s ease; display: flex; flex-direction: column; padding: 20px; }
@@ -98,6 +95,7 @@ td.checked-item { color: #15803d; font-weight: bold; background: #f0fdf4; }
 .btn-delete-item { background: none; border: none; color: #dc2626; padding: 6px; cursor: pointer; border-radius: 8px; display: flex; align-items: center; justify-content: center; }
 .btn-delete-item:hover { background: #fee2e2; }
 
+/* نافذة تأكيد الحذف */
 .confirm-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 3600; justify-content: center; align-items: center; }
 .confirm-modal.active { display: flex; }
 .confirm-box { background: #fff; width: 85%; max-width: 320px; border-radius: 20px; padding: 20px; text-align: center; border: 1px solid var(--line); box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
@@ -107,6 +105,7 @@ td.checked-item { color: #15803d; font-weight: bold; background: #f0fdf4; }
 .btn-confirm-del { background: #dc2626; color: #fff; border: none; flex: 1; padding: 10px; border-radius: 10px; font-weight: bold; cursor: pointer; }
 .btn-cancel-del { background: #f3f4f6; color: #374151; border: 1px solid var(--line); flex: 1; padding: 10px; border-radius: 10px; font-weight: bold; cursor: pointer; }
 
+/* نافذة لا يوجد اتصال بالإنترنت */
 .offline-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 3500; justify-content: center; align-items: center; }
 .offline-modal.active { display: flex; }
 .offline-box { background: #fff; width: 85%; max-width: 360px; border-radius: 24px; padding: 24px 20px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.2); border: 1px solid var(--line); }
@@ -118,6 +117,7 @@ td.checked-item { color: #15803d; font-weight: bold; background: #f0fdf4; }
 </head>
 <body>
 
+<!-- الشاشة الأولى: اختيار الخدمة -->
 <main id="s1">
   <h1>بوابة المواطن</h1>
   <div class="sub">عبد السلام سعد نجم عبوش - وكالة المواد الغذائية</div>
@@ -127,6 +127,7 @@ td.checked-item { color: #15803d; font-weight: bold; background: #f0fdf4; }
   <div class="logo"><img alt="شعار الوكالة" src="logo.png"></div>
 </main>
 
+<!-- الشاشة الثانية: تسجيل الدخول -->
 <main id="s2" hidden>
   <h1 id="ttl" style="margin-top:15px;">تسجيل الدخول</h1>
   <form id="f" autocomplete="off">
@@ -139,8 +140,10 @@ td.checked-item { color: #15803d; font-weight: bold; background: #f0fdf4; }
   <div class="logo"><img alt="شعار الوكالة" src="logo.png"></div>
 </main>
 
+<!-- الشاشة الثالثة: عرض البيانات والجدول -->
 <main id="s3" hidden>
   <div class="top-bar-s3">
+    <!-- زر القائمة يظهر فقط عند وجود بطاقات مسجلة -->
     <button class="btn-exit" id="menuBtn" onclick="toggleSidebar()" type="button" style="font-weight: bold; display: none;">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
       القائمة
@@ -157,15 +160,15 @@ td.checked-item { color: #15803d; font-weight: bold; background: #f0fdf4; }
     </div>
     <div class="card-row">
       <span class="card-label">عدد الأفراد</span>
-      <span class="card-val" id="imem">10</span>
+      <span class="card-val">10</span>
     </div>
     <div class="card-row">
       <span class="card-label">المستحقون</span>
-      <span class="card-val" id="ielg">10</span>
+      <span class="card-val">10</span>
     </div>
     <div class="card-row">
       <span class="card-label">المحجوبون</span>
-      <span class="card-val" id="iblk">0</span>
+      <span class="card-val">0</span>
     </div>
   </div>
 
@@ -173,18 +176,14 @@ td.checked-item { color: #15803d; font-weight: bold; background: #f0fdf4; }
 
   <div class="tw">
     <table id="dataTable">
+      <!-- جدول التموينية أو الرعاية برمجياً -->
     </table>
   </div>
 
-  <div class="footer-up" id="footerUp">آخر تحديث: <span id="currentTime">--</span> (يتحدّث تلقائياً)</div>
+  <div class="footer-up" id="footerUp">آخر تحديث: ٤:٥٨:٢٣ م (يتحدّث تلقائياً)</div>
 </main>
 
-<main id="s4" hidden>
-  <div class="citizen-title">ما الجديد</div>
-  <div class="citizen-sub">آخر الإشعارات والتنبيهات الخاصة بوصول المواد والوجبات</div>
-  <div class="news-list" id="newsListContainer"></div>
-</main>
-
+<!-- شريط التنقل السفلي -->
 <nav class="bottom-nav">
   <button class="nav-item" id="navRation" onclick="navSelect('r')" type="button">
     <svg class="nav-icon" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-7-2h2v-4h4v-2h-4V7h-2v4H8v2h4z"/></svg>
@@ -198,12 +197,9 @@ td.checked-item { color: #15803d; font-weight: bold; background: #f0fdf4; }
     <svg class="nav-icon" viewBox="0 0 24 24"><path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>
     <span class="nav-label">الرعاية الاجتماعية</span>
   </button>
-  <button class="nav-item" id="navNews" onclick="navSelect('news')" type="button">
-    <svg class="nav-icon" viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z"/></svg>
-    <span class="nav-label">ما الجديد</span>
-  </button>
 </nav>
 
+<!-- القائمة الجانبية (Drawer) -->
 <div class="drawer-overlay" id="drawerOverlay" onclick="toggleSidebar()"></div>
 <div class="side-drawer" id="sideDrawer">
   <div class="drawer-header">
@@ -213,6 +209,7 @@ td.checked-item { color: #15803d; font-weight: bold; background: #f0fdf4; }
   <div class="families-list" id="familiesList"></div>
 </div>
 
+<!-- نافذة تأكيد الحذف -->
 <div class="confirm-modal" id="confirmModal">
   <div class="confirm-box">
     <div class="confirm-title">تأكيد الحذف</div>
@@ -224,6 +221,7 @@ td.checked-item { color: #15803d; font-weight: bold; background: #f0fdf4; }
   </div>
 </div>
 
+<!-- نافذة لا يوجد اتصال بالإنترنت -->
 <div class="offline-modal" id="offlineModal">
   <div class="offline-box">
     <div class="offline-title">لا يوجد اتصال بالإنترنت</div>
@@ -234,103 +232,15 @@ td.checked-item { color: #15803d; font-weight: bold; background: #f0fdf4; }
   </div>
 </div>
 
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getFirestore, collection, getDocs, doc, setDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyDNqrFQG8_-j49Z17Z2z8UEB5F1L6wOS0Y",
-    authDomain: "agency-b63b1.firebaseapp.com",
-    projectId: "agency-b63b1",
-    storageBucket: "agency-b63b1.firebasestorage.app",
-    messagingSenderId: "51994072592",
-    appId: "1:51994072592:web:3d22d07209c2ab7aa99c95"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-
+<script>
   let mode = 'r';
+  let families = JSON.parse(localStorage.getItem('saved_families')) || [];
   let activeIndex = localStorage.getItem('active_family_index') !== null ? parseInt(localStorage.getItem('active_family_index')) : -1;
   let targetDeleteIdx = -1;
-  let cachedFamilies = [];
 
-  function nz(s){ return String(s||"").replace(/[\u064B-\u065F\u0670\u0640]/g,"").replace(/[أإآٱ]/g,"ا").replace(/ى/g,"ي").replace(/ة/g,"ه").replace(/ی/g,"ي").replace(/ک/g,"ك").replace(/[٠-٩]/g,function(d){return "٠١٢٣٤٥٦٧٨٩".indexOf(d)}).toLowerCase(); }
-  function compact(s){ return nz(s).replace(/\s+/g,""); }
-  function digits(s){ return nz(s).replace(/\D/g,""); }
-
-  async function keyOf(sec, name, card) {
-    const b = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(sec + "|" + digits(card) + "|" + compact(name).slice(0, 8)));
-    return Array.from(new Uint8Array(b)).map(x => x.toString(16).padStart(2, "0")).join("");
-  }
-
-  async function fetchFamiliesFromFirebase() {
-    try {
-      let list = [];
-      const cols = [
-        { col: "ration", service: "الحصة التموينية" },
-        { col: "welfare", service: "الرعاية الاجتماعية" }
-      ];
-
-      for (let c of cols) {
-        try {
-          const snap = await getDocs(collection(db, c.col));
-          snap.forEach((d) => {
-            const data = d.data();
-            let parsedT = data.records || {};
-            if (data.tj) {
-              try {
-                const matrix = JSON.parse(data.tj);
-                const HD = c.service === 'الرعاية الاجتماعية' ? ["حليب","طحين","سكر","شاي","زيت"] : ["طحين","زيت","سكر","معجون","رز","بقوليات"];
-                matrix.forEach((row, mIdx) => {
-                  HD.forEach((colName, j) => {
-                    if (row[j] === 1) parsedT[`${mIdx}_${colName}`] = true;
-                  });
-                });
-              } catch(e){}
-            }
-
-            list.push({
-              id: d.id,
-              colName: c.col,
-              name: data.name || "مواطن",
-              card: digits(data.card || d.id),
-              members: data.fam || 10,
-              eligible: data.ent !== undefined ? data.ent : (data.fam || 10),
-              blocked: data.blk !== undefined ? data.blk : 0,
-              records: parsedT,
-              serviceName: c.service
-            });
-          });
-        } catch(e) {}
-      }
-
-      cachedFamilies = list;
-      return cachedFamilies;
-    } catch (e) {
-      console.error("خطأ في جلب البيانات:", e);
-      return [];
-    }
-  }
-
-  function getNotifications() {
-    return JSON.parse(localStorage.getItem('agent_notifications')) || [
-      { title: "وصول وجبة جديدة", desc: "تم قدوم مادة الطحين والشكر للمستودع وجاهزة للتوزيع.", date: new Date().toISOString().split('T')[0] }
-    ];
-  }
-
-  function updateLiveTime() {
-    const now = new Date();
-    let hours = now.getHours();
-    const minutes = now.getMinutes();
-    const ampm = hours >= 12 ? 'م' : 'ص';
-    hours = hours % 12;
-    hours = hours ? hours : 12;
-    const minutesStr = minutes < 10 ? '0' + minutes : minutes;
-    const timeEl = document.getElementById('currentTime');
-    if (timeEl) {
-      timeEl.textContent = `${hours}:${minutesStr} ${ampm}`;
-    }
+  function updateFamiliesStorage() {
+    localStorage.setItem('saved_families', JSON.stringify(families));
+    localStorage.setItem('active_family_index', activeIndex);
   }
 
   function applyTheme(isWelfare) {
@@ -341,7 +251,7 @@ td.checked-item { color: #15803d; font-weight: bold; background: #f0fdf4; }
     }
   }
 
-  window.toggleSidebar = function() {
+  function toggleSidebar() {
     const drawer = document.getElementById('sideDrawer');
     const overlay = document.getElementById('drawerOverlay');
     drawer.classList.toggle('active');
@@ -351,11 +261,10 @@ td.checked-item { color: #15803d; font-weight: bold; background: #f0fdf4; }
     }
   }
 
-  async function renderFamiliesList() {
+  function renderFamiliesList() {
     const list = document.getElementById('familiesList');
     const drawerTitle = document.getElementById('drawerTitle');
     const currentService = (mode === 'r') ? 'الحصة التموينية' : 'الرعاية الاجتماعية';
-    const families = await fetchFamiliesFromFirebase();
     
     drawerTitle.textContent = 'بطاقات ' + currentService;
     list.innerHTML = '';
@@ -383,86 +292,73 @@ td.checked-item { color: #15803d; font-weight: bold; background: #f0fdf4; }
     });
   }
 
-  window.promptDelete = function(e, idx) {
+  function promptDelete(e, idx) {
     e.stopPropagation();
     targetDeleteIdx = idx;
     document.getElementById('confirmModal').classList.add('active');
   }
 
-  window.closeConfirmModal = function() {
+  function closeConfirmModal() {
     targetDeleteIdx = -1;
     document.getElementById('confirmModal').classList.remove('active');
   }
 
-  window.executeDelete = async function() {
-    if (targetDeleteIdx !== -1 && cachedFamilies[targetDeleteIdx]) {
-      const fam = cachedFamilies[targetDeleteIdx];
-      try {
-        await deleteDoc(doc(db, fam.colName, fam.id));
-      } catch(e) {}
-
-      activeIndex = -1;
-      localStorage.setItem('active_family_index', -1);
+  function executeDelete() {
+    if (targetDeleteIdx !== -1) {
+      families.splice(targetDeleteIdx, 1);
+      if (activeIndex === targetDeleteIdx) {
+        activeIndex = -1;
+      } else if (activeIndex > targetDeleteIdx) {
+        activeIndex--;
+      }
+      updateFamiliesStorage();
       closeConfirmModal();
       renderFamiliesList();
 
-      const updatedFamilies = await fetchFamiliesFromFirebase();
       const currentService = (mode === 'r') ? 'الحصة التموينية' : 'الرعاية الاجتماعية';
-      const hasServiceCards = updatedFamilies.some(fam => fam.serviceName === currentService);
+      const hasServiceCards = families.some(fam => fam.serviceName === currentService);
 
       if (!hasServiceCards) {
         showEmptyState(currentService);
       } else {
+        if (activeIndex === -1 || !families[activeIndex] || families[activeIndex].serviceName !== currentService) {
+          const firstMatch = families.findIndex(fam => fam.serviceName === currentService);
+          if (firstMatch !== -1) activeIndex = firstMatch;
+        }
         loadActiveFamilyData();
       }
     }
   }
 
-  window.switchFamily = function(idx) {
+  function switchFamily(idx) {
     activeIndex = idx;
-    localStorage.setItem('active_family_index', activeIndex);
-    window.toggleSidebar();
+    updateFamiliesStorage();
+    toggleSidebar();
     loadActiveFamilyData();
   }
 
-  function buildTable(fam) {
+  function buildTable(serviceName) {
     const tbl = document.getElementById('dataTable');
     const months = ["الأول", "الثاني", "الثالث", "الرابع", "الخامس", "السادس", "السابع", "الثامن", "التاسع", "العاشر", "الحادي عشر", "الثاني عشر"];
-    const records = fam.records || {};
-
-    if (fam.serviceName === 'الرعاية الاجتماعية') {
-      const cols = ["حليب", "طحين", "سكر", "شاي", "زيت"];
-      let html = `<thead><tr><th>الشهر</th><th>حليب</th><th>طحين</th><th>سكر</th><th>شاي</th><th>زيت</th><th>الأفراد</th><th>المبلغ</th></tr></thead><tbody>`;
-      
-      months.forEach((m, mIdx) => {
-        html += `<tr><td class="month-col">${m}</td>`;
-        cols.forEach(col => {
-          const isChecked = records[`${mIdx}_${col}`] || records[`${m}_${col}`];
-          html += `<td class="${isChecked ? 'checked-item' : ''}">${isChecked ? '✔ تم' : ''}</td>`;
-        });
-        html += `<td>${fam.members || 10}</td><td>${fam.price || ''}</td></tr>`;
+    
+    if (serviceName === 'الرعاية الاجتماعية') {
+      let html = `<thead><tr><th>الشهر</th><th>حليب</th><th>شاي</th><th>طحين</th><th>زيت</th><th>سكر</th><th>الأفراد</th><th>المبلغ</th></tr></thead><tbody>`;
+      months.forEach(m => {
+        html += `<tr><td class="month-col">${m}</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>`;
       });
       html += `</tbody>`;
       tbl.innerHTML = html;
     } else {
-      const cols = ["طحين", "زيت", "سكر", "معجون", "رز", "بقوليات"];
       let html = `<thead><tr><th>الشهر</th><th>طحين</th><th>زيت</th><th>سكر</th><th>معجون</th><th>رز</th><th>بقوليات</th><th>الأفراد</th><th>المبلغ</th></tr></thead><tbody>`;
-      
-      months.forEach((m, mIdx) => {
-        html += `<tr><td class="month-col">${m}</td>`;
-        cols.forEach(col => {
-          const isChecked = records[`${mIdx}_${col}`] || records[`${m}_${col}`];
-          html += `<td class="${isChecked ? 'checked-item' : ''}">${isChecked ? '✔ تم' : ''}</td>`;
-        });
-        html += `<td>${fam.members || 10}</td><td>${fam.price || ''}</td></tr>`;
+      months.forEach(m => {
+        html += `<tr><td class="month-col">${m}</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>`;
       });
       html += `</tbody>`;
       tbl.innerHTML = html;
     }
   }
 
-  async function loadActiveFamilyData() {
-    const families = await fetchFamiliesFromFirebase();
+  function loadActiveFamilyData() {
     if (activeIndex >= 0 && activeIndex < families.length) {
       const fam = families[activeIndex];
       mode = (fam.serviceName === 'الرعاية الاجتماعية') ? 'w' : 'r';
@@ -470,25 +366,20 @@ td.checked-item { color: #15803d; font-weight: bold; background: #f0fdf4; }
       document.getElementById('icd').textContent = fam.card;
       document.getElementById('fsub').textContent = fam.serviceName;
       
-      if(document.getElementById('imem')) document.getElementById('imem').textContent = fam.members;
-      if(document.getElementById('ielg')) document.getElementById('ielg').textContent = fam.eligible;
-      if(document.getElementById('iblk')) document.getElementById('iblk').textContent = fam.blocked;
-
       document.getElementById('cardDetailsBox').style.display = 'block';
       document.getElementById('tblHeading').style.display = 'block';
       document.getElementById('dataTable').style.display = 'table';
       document.getElementById('footerUp').style.display = 'block';
+      
+      // إظهار زر القائمة حصرياً عند وجود بطاقات مسجلة
       document.getElementById('menuBtn').style.display = 'flex';
-
-      updateLiveTime();
 
       const isWelfare = (mode === 'w');
       applyTheme(isWelfare);
-      buildTable(fam);
+      buildTable(fam.serviceName);
 
       s1.hidden = true;
       s2.hidden = true;
-      document.getElementById('s4').hidden = true;
       s3.hidden = false;
       updateNavHighlight(isWelfare ? 'w' : 'r');
     }
@@ -505,6 +396,8 @@ td.checked-item { color: #15803d; font-weight: bold; background: #f0fdf4; }
     document.getElementById('cardDetailsBox').style.display = 'none';
     document.getElementById('tblHeading').style.display = 'none';
     document.getElementById('footerUp').style.display = 'none';
+    
+    // إخفاء زر القائمة لعدم وجود بطاقات مسجلة في هذا القسم
     document.getElementById('menuBtn').style.display = 'none';
 
     const tbl = document.getElementById('dataTable');
@@ -512,44 +405,14 @@ td.checked-item { color: #15803d; font-weight: bold; background: #f0fdf4; }
 
     s1.hidden = true;
     s2.hidden = true;
-    document.getElementById('s4').hidden = true;
     s3.hidden = false;
     updateNavHighlight(isWelfare ? 'w' : 'r');
   }
 
-  function renderNewsPage() {
-    applyTheme(false);
-    s1.hidden = true;
-    s2.hidden = true;
-    s3.hidden = true;
-    document.getElementById('s4').hidden = false;
-    updateNavHighlight('news');
-
-    const container = document.getElementById('newsListContainer');
-    container.innerHTML = '';
-    const notifications = getNotifications();
-
-    if (notifications.length === 0) {
-      container.innerHTML = `<div style="text-align:center; color:var(--mute); padding:40px; font-size:16px;">لا توجد إشعارات جديدة حالياً</div>`;
-      return;
-    }
-
-    notifications.forEach(item => {
-      container.innerHTML += `
-        <div class="news-card">
-          <div class="news-title">🔔 ${item.title}</div>
-          <div class="news-desc">${item.desc}</div>
-          <div class="news-date">تاريخ الإشعار: ${item.date}</div>
-        </div>
-      `;
-    });
-  }
-
-  window.navSelect = function(target) {
+  function navSelect(target) {
     if (target === 'h') {
       s2.hidden = true;
       s3.hidden = true;
-      document.getElementById('s4').hidden = true;
       s1.hidden = false;
       applyTheme(false);
       updateNavHighlight('h');
@@ -557,17 +420,14 @@ td.checked-item { color: #15803d; font-weight: bold; background: #f0fdf4; }
       handleBottomNavService('الحصة التموينية');
     } else if (target === 'w') {
       handleBottomNavService('الرعاية الاجتماعية');
-    } else if (target === 'news') {
-      renderNewsPage();
     }
   }
 
-  async function handleBottomNavService(serviceName) {
-    const families = await fetchFamiliesFromFirebase();
+  function handleBottomNavService(serviceName) {
     const foundIdx = families.findIndex(fam => fam.serviceName === serviceName);
     if (foundIdx !== -1) {
       activeIndex = foundIdx;
-      localStorage.setItem('active_family_index', activeIndex);
+      updateFamiliesStorage();
       loadActiveFamilyData();
     } else {
       showEmptyState(serviceName);
@@ -578,12 +438,10 @@ td.checked-item { color: #15803d; font-weight: bold; background: #f0fdf4; }
     document.getElementById('navRation').classList.remove('active');
     document.getElementById('navHome').classList.remove('active');
     document.getElementById('navWelfare').classList.remove('active');
-    document.getElementById('navNews').classList.remove('active');
 
     if (activeKey === 'r') document.getElementById('navRation').classList.add('active');
     else if (activeKey === 'h') document.getElementById('navHome').classList.add('active');
     else if (activeKey === 'w') document.getElementById('navWelfare').classList.add('active');
-    else if (activeKey === 'news') document.getElementById('navNews').classList.add('active');
   }
 
   function checkOnlineStatus() {
@@ -614,7 +472,6 @@ td.checked-item { color: #15803d; font-weight: bold; background: #f0fdf4; }
     applyTheme(false);
     s1.hidden = true;
     s3.hidden = true;
-    document.getElementById('s4').hidden = true;
     s2.hidden = false;
     f.reset();
   };
@@ -626,53 +483,34 @@ td.checked-item { color: #15803d; font-weight: bold; background: #f0fdf4; }
     applyTheme(true);
     s1.hidden = true;
     s3.hidden = true;
-    document.getElementById('s4').hidden = true;
     s2.hidden = false;
     f.reset();
   };
 
-  f.onsubmit = async (e) => {
+  f.onsubmit = (e) => {
     e.preventDefault();
     const nVal = nn.value.trim();
-    const cVal = digits(cd.value);
+    const cVal = cd.value.trim();
     if(!nVal || !cVal) return;
 
     const sName = (mode === 'r') ? 'الحصة التموينية' : 'الرعاية الاجتماعية';
-    const colName = (mode === 'r') ? 'ration' : 'welfare';
-    let families = await fetchFamiliesFromFirebase();
 
     let existingIndex = families.findIndex(fam => fam.card === cVal && fam.serviceName === sName);
-    
     if (existingIndex !== -1) {
       activeIndex = existingIndex;
     } else {
-      const docKey = await keyOf(mode === 'r' ? 'ration' : 'welfare', nVal, cVal);
-      const newCardData = {
-        id: docKey,
-        name: nVal,
-        card: cVal,
-        fam: 10,
-        ent: 10,
-        blk: 0
-      };
-      
-      try {
-        await setDoc(doc(db, colName, docKey), newCardData);
-        families = await fetchFamiliesFromFirebase();
-        activeIndex = families.findIndex(fam => fam.card === cVal && fam.serviceName === sName);
-      } catch (err) {
-        console.error("خطأ في حفظ البطاقة:", err);
-      }
+      families.push({ name: nVal, card: cVal, serviceName: sName });
+      activeIndex = families.length - 1;
     }
 
-    localStorage.setItem('active_family_index', activeIndex);
+    updateFamiliesStorage();
     loadActiveFamilyData();
     f.reset();
+    
     toggleSidebar();
   };
 
-  window.addEventListener('DOMContentLoaded', async () => {
-    const families = await fetchFamiliesFromFirebase();
+  window.addEventListener('DOMContentLoaded', () => {
     if (families.length > 0 && activeIndex >= 0 && activeIndex < families.length) {
       loadActiveFamilyData();
     } else {
