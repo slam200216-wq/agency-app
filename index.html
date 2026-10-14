@@ -382,33 +382,31 @@ body.welfare-theme td.month-col { background: #f8fafc; }
     } else if (target === 'r') {
       mode = 'r';
       applyTheme(false);
-      handleBottomNavService('الحصة التموينية');
+      openBottomNavService('الحصة التموينية');
       updateNavHighlight('r');
     } else if (target === 'w') {
       mode = 'w';
       applyTheme(true);
-      handleBottomNavService('الرعاية الاجتماعية');
+      openBottomNavService('الرعاية الاجتماعية');
       updateNavHighlight('w');
     }
   }
 
-  /* عند الضغط على التموينية أو الرعاية من الشريط السفلي */
-  function handleBottomNavService(serviceName) {
-    // نبحث عن أول بطاقة مسجلة تخص هذه الخدمة
+  /* أزرار الشريط السفلي تفتح آخر بطاقة مسجلة أو القائمة مباشرة */
+  function openBottomNavService(serviceName) {
     const foundIdx = families.findIndex(fam => fam.serviceName === serviceName);
     if (foundIdx !== -1) {
-      // إذا وُجدت بطاقة مسجلة مسبقاً، افتحها مباشرة بدون تسجيل دخول
       activeIndex = foundIdx;
       updateFamiliesStorage();
       loadActiveFamilyData();
     } else {
-      // إذا لم تكن هناك أي بطاقة مسجلة لهذا القسم، اذهب لصفحة تسجيل الدخول
-      ttl.textContent = serviceName;
-      l1.textContent = (serviceName === 'الحصة التموينية') ? 'رقم البطاقة التموينية' : 'رقم البطاقة / الرمز الشريطي';
-      s1.hidden = true;
+      // إذا لم توجد بطاقة مسجلة، افتح القائمة الجانبية لتشاهد أنه لا توجد بطاقات بدلاً من إجبار التسجيل
+      mode = (serviceName === 'الحصة التموينية') ? 'r' : 'w';
+      applyTheme(serviceName === 'الرعاية الاجتماعية');
       s3.hidden = true;
-      s2.hidden = false;
-      f.reset();
+      s1.hidden = true;
+      s2.hidden = true;
+      toggleSidebar();
     }
   }
 
@@ -443,29 +441,16 @@ body.welfare-theme td.month-col { background: #f8fafc; }
   const nn = document.getElementById('nn');
   const cd = document.getElementById('cd');
 
-  /* أزرار الشاشة الرئيسية */
+  /* النقر على أزرار الواجهة الرئيسية يفتح نافذة تسجيل الدخول دائماً لإضافة عائلة جديدة */
   document.getElementById('gr').onclick = () => {
     mode = 'r';
     ttl.textContent = 'الحصة التموينية';
     l1.textContent = 'رقم البطاقة التموينية';
     applyTheme(false);
-    
-    // إذا كانت هناك بطاقات مسجلة للتموينية، افتح آخر بطاقة نشطة أو الأولى، وإلا افتح نموذج التسجيل
-    const found = families.findIndex(fam => fam.serviceName === 'الحصة التموينية');
-    if (found !== -1 && activeIndex === -1) activeIndex = found;
-    if (activeIndex >= 0 && families[activeIndex] && families[activeIndex].serviceName === 'الحصة التموينية') {
-      loadActiveFamilyData();
-    } else {
-      if (found !== -1) {
-        activeIndex = found;
-        loadActiveFamilyData();
-      } else {
-        s1.hidden = true;
-        s3.hidden = true;
-        s2.hidden = false;
-        f.reset();
-      }
-    }
+    s1.hidden = true;
+    s3.hidden = true;
+    s2.hidden = false;
+    f.reset();
   };
 
   document.getElementById('gw').onclick = () => {
@@ -473,17 +458,10 @@ body.welfare-theme td.month-col { background: #f8fafc; }
     ttl.textContent = 'الرعاية الاجتماعية';
     l1.textContent = 'رقم البطاقة / الرمز الشريطي';
     applyTheme(true);
-    
-    const found = families.findIndex(fam => fam.serviceName === 'الرعاية الاجتماعية');
-    if (found !== -1) {
-      activeIndex = found;
-      loadActiveFamilyData();
-    } else {
-      s1.hidden = true;
-      s3.hidden = true;
-      s2.hidden = false;
-      f.reset();
-    }
+    s1.hidden = true;
+    s3.hidden = true;
+    s2.hidden = false;
+    f.reset();
   };
 
   f.onsubmit = (e) => {
