@@ -152,7 +152,7 @@ body.welfare-theme td.month-col { background: #f8fafc; }
   <div class="citizen-title" id="fn">سعد نجم عبوش</div>
   <div class="citizen-sub" id="fsub">الحصة التموينية</div>
 
-  <div class="card-details">
+  <div class="card-details" id="cardDetailsBox">
     <div class="card-row">
       <span class="card-label">رقم البطاقة</span>
       <span class="card-val" id="icd">4509667</span>
@@ -171,7 +171,7 @@ body.welfare-theme td.month-col { background: #f8fafc; }
     </div>
   </div>
 
-  <div class="tbl-heading">جدول الحصص الشهريّة</div>
+  <div class="tbl-heading" id="tblHeading">جدول الحصص الشهريّة</div>
 
   <div class="tw">
     <table id="dataTable">
@@ -179,7 +179,7 @@ body.welfare-theme td.month-col { background: #f8fafc; }
     </table>
   </div>
 
-  <div class="footer-up">آخر تحديث: ٤:٥٨:٢٣ م (يتحدّث تلقائياً)</div>
+  <div class="footer-up" id="footerUp">آخر تحديث: ٤:٥٨:٢٣ م (يتحدّث تلقائياً)</div>
 </main>
 
 <!-- شريط التنقل السفلي -->
@@ -232,7 +232,7 @@ body.welfare-theme td.month-col { background: #f8fafc; }
 </div>
 
 <script>
-  let mode = 'r'; // 'r' للتموينية أو 'w' للرعاية
+  let mode = 'r';
   let families = JSON.parse(localStorage.getItem('saved_families')) || [];
   let activeIndex = localStorage.getItem('active_family_index') !== null ? parseInt(localStorage.getItem('active_family_index')) : -1;
   let targetDeleteIdx = -1;
@@ -360,6 +360,11 @@ body.welfare-theme td.month-col { background: #f8fafc; }
       document.getElementById('icd').textContent = fam.card;
       document.getElementById('fsub').textContent = fam.serviceName;
       
+      document.getElementById('cardDetailsBox').style.display = 'block';
+      document.getElementById('tblHeading').style.display = 'block';
+      document.getElementById('dataTable').style.display = 'table';
+      document.getElementById('footerUp').style.display = 'block';
+
       const isWelfare = (mode === 'w');
       applyTheme(isWelfare);
       buildTable(fam.serviceName);
@@ -371,7 +376,29 @@ body.welfare-theme td.month-col { background: #f8fafc; }
     }
   }
 
-  /* التنقل عبر الشريط السفلي */
+  /* عرض رسالة عدم وجود بطاقات مسجلة في الصفحة نفسها */
+  function showEmptyState(serviceName) {
+    mode = (serviceName === 'الحصة التموينية') ? 'r' : 'w';
+    const isWelfare = (mode === 'w');
+    applyTheme(isWelfare);
+
+    document.getElementById('fn').textContent = serviceName;
+    document.getElementById('fsub').textContent = serviceName;
+    
+    // إخفاء التفاصيل والجدول وإظهار رسالة التنبيه في نفس الصفحة
+    document.getElementById('cardDetailsBox').style.display = 'none';
+    document.getElementById('tblHeading').style.display = 'none';
+    document.getElementById('footerUp').style.display = 'none';
+
+    const tbl = document.getElementById('dataTable');
+    tbl.innerHTML = `<tbody><tr><td style="padding: 40px 20px; text-align: center; color: var(--mute); font-size: 16px; font-weight: bold;">لا توجد بطاقات مسجلة في ${serviceName}</td></tr></tbody>`;
+
+    s1.hidden = true;
+    s2.hidden = true;
+    s3.hidden = false;
+    updateNavHighlight(isWelfare ? 'w' : 'r');
+  }
+
   function navSelect(target) {
     if (target === 'h') {
       s2.hidden = true;
@@ -380,33 +407,20 @@ body.welfare-theme td.month-col { background: #f8fafc; }
       applyTheme(false);
       updateNavHighlight('h');
     } else if (target === 'r') {
-      mode = 'r';
-      applyTheme(false);
-      openBottomNavService('الحصة التموينية');
-      updateNavHighlight('r');
+      handleBottomNavService('الحصة التموينية');
     } else if (target === 'w') {
-      mode = 'w';
-      applyTheme(true);
-      openBottomNavService('الرعاية الاجتماعية');
-      updateNavHighlight('w');
+      handleBottomNavService('الرعاية الاجتماعية');
     }
   }
 
-  /* أزرار الشريط السفلي تفتح آخر بطاقة مسجلة أو القائمة مباشرة */
-  function openBottomNavService(serviceName) {
+  function handleBottomNavService(serviceName) {
     const foundIdx = families.findIndex(fam => fam.serviceName === serviceName);
     if (foundIdx !== -1) {
       activeIndex = foundIdx;
       updateFamiliesStorage();
       loadActiveFamilyData();
     } else {
-      // إذا لم توجد بطاقة مسجلة، افتح القائمة الجانبية لتشاهد أنه لا توجد بطاقات بدلاً من إجبار التسجيل
-      mode = (serviceName === 'الحصة التموينية') ? 'r' : 'w';
-      applyTheme(serviceName === 'الرعاية الاجتماعية');
-      s3.hidden = true;
-      s1.hidden = true;
-      s2.hidden = true;
-      toggleSidebar();
+      showEmptyState(serviceName);
     }
   }
 
@@ -441,7 +455,6 @@ body.welfare-theme td.month-col { background: #f8fafc; }
   const nn = document.getElementById('nn');
   const cd = document.getElementById('cd');
 
-  /* النقر على أزرار الواجهة الرئيسية يفتح نافذة تسجيل الدخول دائماً لإضافة عائلة جديدة */
   document.getElementById('gr').onclick = () => {
     mode = 'r';
     ttl.textContent = 'الحصة التموينية';
