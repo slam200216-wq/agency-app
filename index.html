@@ -47,8 +47,8 @@ input { width: 100%; font: inherit; color: var(--ink); background: #fff; border:
 .logo { flex: 1; position: relative; min-height: 200px; margin-top: 8px; }
 .logo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
 
-/* الشريط العلوي */
-.top-bar-s3 { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+/* الشريط العلوي بدون زر خروج */
+.top-bar-s3 { display: flex; justify-content: flex-start; align-items: center; margin-bottom: 12px; }
 .btn-exit { background: #fff; border: 1px solid var(--line); padding: 8px 16px; border-radius: 12px; font-size: 16px; cursor: pointer; color: var(--ink); display: flex; align-items: center; gap: 6px; }
 
 .citizen-title { font-size: 26px; font-weight: 700; margin: 0 0 2px 0; color: #1B1610; text-align: right; }
@@ -130,10 +130,6 @@ body.welfare-theme td.month-col { background: #f8fafc; }
 <!-- الشاشة الثالثة: عرض البيانات والجدول -->
 <main id="s3" hidden>
   <div class="top-bar-s3">
-    <button class="btn-exit" id="b3" type="button">
-      خروج
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-    </button>
     <button class="btn-exit" onclick="toggleSidebar()" type="button" style="font-weight: bold;">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
       القائمة
@@ -189,7 +185,7 @@ body.welfare-theme td.month-col { background: #f8fafc; }
   </button>
 </nav>
 
-<!-- القائمة الجانبية (Drawer) -->
+<!-- القائمة الجانبية (Drawer) بدون زر إضافة عائلة -->
 <div class="drawer-overlay" id="drawerOverlay" onclick="toggleSidebar()"></div>
 <div class="side-drawer" id="sideDrawer">
   <div class="drawer-header">
@@ -197,7 +193,6 @@ body.welfare-theme td.month-col { background: #f8fafc; }
     <button class="drawer-close" onclick="toggleSidebar()">✕</button>
   </div>
   <div class="families-list" id="familiesList"></div>
-  <button class="main" onclick="addNewFamily()" type="button">+ إضافة عائلة جديدة</button>
 </div>
 
 <!-- نافذة لا يوجد اتصال بالإنترنت -->
@@ -239,7 +234,6 @@ body.welfare-theme td.month-col { background: #f8fafc; }
     }
   }
 
-  /* عرض بطاقات العوائل المسجلة مفصولة بحسب نوع الخدمة الحالية */
   function renderFamiliesList() {
     const list = document.getElementById('familiesList');
     const drawerTitle = document.getElementById('drawerTitle');
@@ -313,15 +307,6 @@ body.welfare-theme td.month-col { background: #f8fafc; }
     }
   }
 
-  function addNewFamily() {
-    toggleSidebar();
-    s3.hidden = true;
-    s1.hidden = false;
-    s2.hidden = true;
-    applyTheme(false);
-    updateNavHighlight('h');
-  }
-
   function navSelect(target) {
     if (target === 'h') {
       s2.hidden = true;
@@ -393,14 +378,6 @@ body.welfare-theme td.month-col { background: #f8fafc; }
 
   document.getElementById('gr').onclick = () => { navSelect('r'); };
   document.getElementById('gw').onclick = () => { navSelect('w'); };
-
-  document.getElementById('b3').onclick = () => {
-    s3.hidden = true;
-    s1.hidden = false;
-    applyTheme(false);
-    updateNavHighlight('h');
-    f.reset();
-  };
 
   f.onsubmit = (e) => {
     e.preventDefault();
