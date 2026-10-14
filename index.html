@@ -63,15 +63,16 @@ input { width: 100%; font: inherit; color: var(--ink); background: #fff; border:
 .tbl-heading { font-size: 20px; font-weight: 700; text-align: right; margin: 0 0 14px 0; color: #1B1610; }
 
 .tw { border: 1px solid var(--line); border-radius: 14px; overflow: hidden; background: #fff; }
-table { width: 100%; border-collapse: collapse; text-align: center; font-size: 13px; table-layout: fixed; direction: rtl; }
-th { background: var(--thbg); color: var(--thfg); padding: 8px 1px; font-size: 12px; font-weight: bold; border: 1px solid var(--line); text-align: center; }
-td { border: 1px solid var(--line); padding: 7px 1px; color: var(--ink); height: 32px; text-align: center; }
-td.month-col { color: var(--mute); font-weight: 500; font-size: 12px; background: #fffdf8; }
+table { width: 100%; border-collapse: collapse; text-align: center; font-size: 12px; table-layout: fixed; direction: rtl; }
+th { background: var(--thbg); color: var(--thfg); padding: 8px 1px; font-size: 11px; font-weight: bold; border: 1px solid var(--line); text-align: center; }
+td { border: 1px solid var(--line); padding: 6px 1px; color: var(--ink); height: 32px; text-align: center; font-size: 11px; }
+td.month-col { color: var(--mute); font-weight: 500; font-size: 11px; background: #fffdf8; }
 body.welfare-theme td.month-col { background: #f8fafc; }
+td.checked-item { color: #15803d; font-weight: bold; background: #f0fdf4; }
 
 .footer-up { color: var(--mute); font-size: 13px; text-align: right; margin-top: 14px; }
 
-/* شريط التنقل السفلي (4 أزرار الآن) */
+/* شريط التنقل السفلي */
 .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; height: 65px; background: #fff; border-top: 1px solid var(--line); display: flex; justify-content: space-around; align-items: center; z-index: 2000; box-shadow: 0 -2px 10px rgba(0,0,0,0.04); }
 .nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; height: 100%; color: var(--mute); background: none; border: none; border-radius: 0; cursor: pointer; padding: 4px 0; gap: 3px; position: relative; }
 .nav-item.active { color: var(--acc); font-weight: bold; }
@@ -257,7 +258,6 @@ body.welfare-theme td.month-col { background: #f8fafc; }
   let activeIndex = localStorage.getItem('active_family_index') !== null ? parseInt(localStorage.getItem('active_family_index')) : -1;
   let targetDeleteIdx = -1;
 
-  /* تخزين الإشعارات (ما الجديد) محلياً لضمان بقائها */
   let notifications = JSON.parse(localStorage.getItem('app_notifications')) || [
     { title: "وصول وجبة جديدة", desc: "تم قدوم مادة الطحين والشكر للشهر الأول للمستودع وجاهزة للتوزيع.", date: "2026-10-14" }
   ];
@@ -266,13 +266,6 @@ body.welfare-theme td.month-col { background: #f8fafc; }
     localStorage.setItem('saved_families', JSON.stringify(families));
     localStorage.setItem('active_family_index', activeIndex);
     localStorage.setItem('app_notifications', JSON.stringify(notifications));
-  }
-
-  /* دالة لإضافة إشعار جديد تلقائياً عند جرد المستودع */
-  function addNotification(title, desc) {
-    const today = new Date().toISOString().split('T')[0];
-    notifications.unshift({ title, desc, date: today });
-    updateStorage();
   }
 
   function applyTheme(isWelfare) {
@@ -369,21 +362,39 @@ body.welfare-theme td.month-col { background: #f8fafc; }
     loadActiveFamilyData();
   }
 
-  function buildTable(serviceName) {
+  /* بناء الجدول وعرض التأشيرات الخاصة بالمواد المستلمة لكل مواطن */
+  function buildTable(fam) {
     const tbl = document.getElementById('dataTable');
     const months = ["الأول", "الثاني", "الثالث", "الرابع", "الخامس", "السادس", "السابع", "الثامن", "التاسع", "العاشر", "الحادي عشر", "الثاني عشر"];
     
-    if (serviceName === 'الرعاية الاجتماعية') {
+    // إنشاء كائن التأشيرات إذا لم يكن موجوداً
+    if (!fam.records) fam.records = {};
+
+    if (fam.serviceName === 'الرعاية الاجتماعية') {
+      const cols = ["حليب", "شاي", "طحين", "زيت", "سكر"];
       let html = `<thead><tr><th>الشهر</th><th>حليب</th><th>شاي</th><th>طحين</th><th>زيت</th><th>سكر</th><th>الأفراد</th><th>المبلغ</th></tr></thead><tbody>`;
-      months.forEach(m => {
-        html += `<tr><td class="month-col">${m}</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>`;
+      
+      months.forEach((m, mIdx) => {
+        html += `<tr><td class="month-col">${m}</td>`;
+        cols.forEach(col => {
+          const isChecked = fam.records[`${mIdx}_${col}`];
+          html += `<td class="${isChecked ? 'checked-item' : ''}">${isChecked ? '✔ تم' : ''}</td>`;
+        });
+        html += `<td>${fam.members || 10}</td><td>${fam.price || ''}</td></tr>`;
       });
       html += `</tbody>`;
       tbl.innerHTML = html;
     } else {
+      const cols = ["طحين", "زيت", "سكر", "معجون", "رز", "بقوليات"];
       let html = `<thead><tr><th>الشهر</th><th>طحين</th><th>زيت</th><th>سكر</th><th>معجون</th><th>رز</th><th>بقوليات</th><th>الأفراد</th><th>المبلغ</th></tr></thead><tbody>`;
-      months.forEach(m => {
-        html += `<tr><td class="month-col">${m}</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>`;
+      
+      months.forEach((m, mIdx) => {
+        html += `<tr><td class="month-col">${m}</td>`;
+        cols.forEach(col => {
+          const isChecked = fam.records[`${mIdx}_${col}`];
+          html += `<td class="${isChecked ? 'checked-item' : ''}">${isChecked ? '✔ تم' : ''}</td>`;
+        });
+        html += `<td>${fam.members || 10}</td><td>${fam.price || ''}</td></tr>`;
       });
       html += `</tbody>`;
       tbl.innerHTML = html;
@@ -406,7 +417,7 @@ body.welfare-theme td.month-col { background: #f8fafc; }
 
       const isWelfare = (mode === 'w');
       applyTheme(isWelfare);
-      buildTable(fam.serviceName);
+      buildTable(fam);
 
       s1.hidden = true;
       s2.hidden = true;
@@ -439,7 +450,6 @@ body.welfare-theme td.month-col { background: #f8fafc; }
     updateNavHighlight(isWelfare ? 'w' : 'r');
   }
 
-  /* عرض شاشة ما الجديد (الإشعارات) */
   function renderNewsPage() {
     applyTheme(false);
     s1.hidden = true;
@@ -564,7 +574,7 @@ body.welfare-theme td.month-col { background: #f8fafc; }
     if (existingIndex !== -1) {
       activeIndex = existingIndex;
     } else {
-      families.push({ name: nVal, card: cVal, serviceName: sName });
+      families.push({ name: nVal, card: cVal, serviceName: sName, records: {} });
       activeIndex = families.length - 1;
     }
 
