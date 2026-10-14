@@ -255,16 +255,21 @@ td.checked-item { color: #15803d; font-weight: bold; background: #f0fdf4; }
   let targetDeleteIdx = -1;
   let cachedFamilies = [];
 
-  function norm(s){ return String(s||"").replace(/[٠-٩]/g, function(d){ return "٠١٢٣٤٥٦٧٨٩".indexOf(d); }).trim(); }
+  function nz(s){ return String(s||"").replace(/[\u064B-\u065F\u0670\u0640]/g,"").replace(/[أإآٱ]/g,"ا").replace(/ى/g,"ي").replace(/ة/g,"ه").replace(/ی/g,"ي").replace(/ک/g,"ك").replace(/[٠-٩]/g,function(d){return "٠١٢٣٤٥٦٧٨٩".indexOf(d)}).toLowerCase(); }
+  function compact(s){ return nz(s).replace(/\s+/g,""); }
+  function digits(s){ return nz(s).replace(/\D/g,""); }
+
+  async function keyOf(sec, name, card) {
+    const b = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(sec + "|" + digits(card) + "|" + compact(name).slice(0, 8)));
+    return Array.from(new Uint8Array(b)).map(x => x.toString(16).padStart(2, "0")).join("");
+  }
 
   async function fetchFamiliesFromFirebase() {
     try {
       let list = [];
       const cols = [
         { col: "ration", service: "الحصة التموينية" },
-        { col: "ration_records", service: "الحصة التموينية" },
-        { col: "welfare", service: "الرعاية الاجتماعية" },
-        { col: "welfare_records", service: "الرعاية الاجتماعية" }
+        { col: "welfare", service: "الرعاية الاجتماعية" }
       ];
 
       for (let c of cols) {
@@ -289,10 +294,10 @@ td.checked-item { color: #15803d; font-weight: bold; background: #f0fdf4; }
               id: d.id,
               colName: c.col,
               name: data.name || "مواطن",
-              card: norm(data.card || data.c || d.id),
-              members: data.fam || data.members || 10,
-              eligible: data.ent !== undefined ? data.ent : (data.eligible || data.fam || 10),
-              blocked: data.blk !== undefined ? data.blk : (data.blocked || 0),
+              card: digits(data.card || d.id),
+              members: data.fam || 10,
+              eligible: data.ent !== undefined ? data.ent : (data.fam || 10),
+              blocked: data.blk !== undefined ? data.blk : 0,
               records: parsedT,
               serviceName: c.service
             });
@@ -394,9 +399,7 @@ td.checked-item { color: #15803d; font-weight: bold; background: #f0fdf4; }
       const fam = cachedFamilies[targetDeleteIdx];
       try {
         await deleteDoc(doc(db, fam.colName, fam.id));
-      } catch(e) {
-        console.error("خطأ الحذف:", e);
-      }
+      } catch(e) {}
 
       activeIndex = -1;
       localStorage.setItem('active_family_index', -1);
@@ -631,33 +634,34 @@ td.checked-item { color: #15803d; font-weight: bold; background: #f0fdf4; }
   f.onsubmit = async (e) => {
     e.preventDefault();
     const nVal = nn.value.trim();
-    const cVal = norm(cd.value);
+    const cVal = digits(cd.value);
     if(!nVal || !cVal) return;
 
     const sName = (mode === 'r') ? 'الحصة التموينية' : 'الرعاية الاجتماعية';
     const colName = (mode === 'r') ? 'ration' : 'welfare';
     let families = await fetchFamiliesFromFirebase();
 
-    let existingIndex = families.findIndex(fam => (fam.card === cVal || fam.id === cVal) && fam.serviceName === sName);
+    let existingIndex = families.findIndex(fam => fam.card === cVal && fam.serviceName === sName);
     
     if (existingIndex !== -1) {
       activeIndex = existingIndex;
     } else {
+      const docKey = await keyOf(mode === 'r' ? 'ration' : 'welfare', nVal, cVal);
       const newCardData = {
+        id: docKey,
         name: nVal,
         card: cVal,
         fam: 10,
         ent: 10,
-        blk: 0,
-        records: {}
+        blk: 0
       };
       
       try {
-        await setDoc(doc(db, colName, cVal), newCardData);
+        await setDoc(doc(db, colName, docKey), newCardData);
         families = await fetchFamiliesFromFirebase();
-        activeIndex = families.findIndex(fam => (fam.card === cVal || fam.id === cVal) && fam.serviceName === sName);
+        activeIndex = families.findIndex(fam => fam.card === cVal && fam.serviceName === sName);
       } catch (err) {
-        console.error("خطأ في حفظ البطاقة الجديدة:", err);
+        console.error("خطأ في حفظ البطاقة:", err);
       }
     }
 
