@@ -48,7 +48,7 @@ input { width: 100%; font: inherit; color: var(--ink); background: #fff; border:
 .logo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
 
 /* الشريط العلوي */
-.top-bar-s3 { display: flex; justify-content: flex-start; align-items: center; margin-bottom: 12px; }
+.top-bar-s3 { display: flex; justify-content: flex-start; align-items: center; margin-bottom: 12px; min-height: 40px; }
 .btn-exit { background: #fff; border: 1px solid var(--line); padding: 8px 16px; border-radius: 12px; font-size: 16px; cursor: pointer; color: var(--ink); display: flex; align-items: center; gap: 6px; }
 
 .citizen-title { font-size: 26px; font-weight: 700; margin: 0 0 2px 0; color: #1B1610; text-align: right; }
@@ -143,7 +143,8 @@ body.welfare-theme td.month-col { background: #f8fafc; }
 <!-- الشاشة الثالثة: عرض البيانات والجدول -->
 <main id="s3" hidden>
   <div class="top-bar-s3">
-    <button class="btn-exit" onclick="toggleSidebar()" type="button" style="font-weight: bold;">
+    <!-- زر القائمة يظهر فقط عند وجود بطاقات مسجلة -->
+    <button class="btn-exit" id="menuBtn" onclick="toggleSidebar()" type="button" style="font-weight: bold; display: none;">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
       القائمة
     </button>
@@ -314,11 +315,16 @@ body.welfare-theme td.month-col { background: #f8fafc; }
       closeConfirmModal();
       renderFamiliesList();
 
-      if (activeIndex === -1) {
-        s3.hidden = true;
-        s1.hidden = false;
-        updateNavHighlight('h');
+      const currentService = (mode === 'r') ? 'الحصة التموينية' : 'الرعاية الاجتماعية';
+      const hasServiceCards = families.some(fam => fam.serviceName === currentService);
+
+      if (!hasServiceCards) {
+        showEmptyState(currentService);
       } else {
+        if (activeIndex === -1 || !families[activeIndex] || families[activeIndex].serviceName !== currentService) {
+          const firstMatch = families.findIndex(fam => fam.serviceName === currentService);
+          if (firstMatch !== -1) activeIndex = firstMatch;
+        }
         loadActiveFamilyData();
       }
     }
@@ -364,6 +370,9 @@ body.welfare-theme td.month-col { background: #f8fafc; }
       document.getElementById('tblHeading').style.display = 'block';
       document.getElementById('dataTable').style.display = 'table';
       document.getElementById('footerUp').style.display = 'block';
+      
+      // إظهار زر القائمة حصرياً عند وجود بطاقات مسجلة
+      document.getElementById('menuBtn').style.display = 'flex';
 
       const isWelfare = (mode === 'w');
       applyTheme(isWelfare);
@@ -376,7 +385,6 @@ body.welfare-theme td.month-col { background: #f8fafc; }
     }
   }
 
-  /* عرض رسالة عدم وجود بطاقات مسجلة في الصفحة نفسها */
   function showEmptyState(serviceName) {
     mode = (serviceName === 'الحصة التموينية') ? 'r' : 'w';
     const isWelfare = (mode === 'w');
@@ -385,10 +393,12 @@ body.welfare-theme td.month-col { background: #f8fafc; }
     document.getElementById('fn').textContent = serviceName;
     document.getElementById('fsub').textContent = serviceName;
     
-    // إخفاء التفاصيل والجدول وإظهار رسالة التنبيه في نفس الصفحة
     document.getElementById('cardDetailsBox').style.display = 'none';
     document.getElementById('tblHeading').style.display = 'none';
     document.getElementById('footerUp').style.display = 'none';
+    
+    // إخفاء زر القائمة لعدم وجود بطاقات مسجلة في هذا القسم
+    document.getElementById('menuBtn').style.display = 'none';
 
     const tbl = document.getElementById('dataTable');
     tbl.innerHTML = `<tbody><tr><td style="padding: 40px 20px; text-align: center; color: var(--mute); font-size: 16px; font-weight: bold;">لا توجد بطاقات مسجلة في ${serviceName}</td></tr></tbody>`;
