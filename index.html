@@ -8,38 +8,35 @@
 <style>
 :root {
   --bg: #fff;
-  --card: #fffdf8;
+  --card: #fff;
   --ink: #1B1610;
   --mute: #8C7B65;
   --line: #EFE6D5;
   --acc: #A55604;
   --btn: #F5A524;
   --btntfg: #1B1610;
-  --bad: #C53030;
   --thbg: #FDF6E2;
 }
 
-* { box-sizing: border-box; font-family: Tajawal, Tahoma, Arial, sans-serif; }
-body { margin: 0; background: #fff; color: var(--ink); font-size: 16px; padding: 16px; }
+* { box-sizing: border-box; font-family: Tajawal, Tahoma, Arial, sans-serif; direction: rtl; }
+body { margin: 0; background: #fff; color: var(--ink); font-size: 16px; padding: 16px; text-align: right; }
 main { max-width: 500px; margin: 0 auto; display: flex; flex-direction: column; min-height: 100vh; }
 [hidden] { display: none !important; }
 
-/* أزرار الواجهة الأولى */
-h1 { font-size: 24px; margin: 8px 0 2px; }
-.sub { color: var(--mute); margin-bottom: 16px; }
+h1 { font-size: 24px; margin: 8px 0 2px; text-align: right; }
+.sub { color: var(--mute); margin-bottom: 16px; text-align: right; }
 button { font: inherit; font-weight: 500; border: 1px solid var(--line); background: #fff; color: var(--ink); border-radius: 12px; }
 button.main { background: var(--btn); color: var(--btntfg); border-color: var(--btn); width: 100%; padding: 12px; font-weight: 700; cursor: pointer; }
 .big { display: flex; align-items: center; justify-content: center; width: 100%; padding: 16px; border: 0; border-radius: 16px; font-size: 18px; font-weight: 700; cursor: pointer; }
 .big.r { background: #F5A524; color: #1B1610; }
 .big.w { background: #2F7BE5; color: #fff; }
 
-label { display: block; font-weight: 500; margin: 12px 0 4px; }
-input { width: 100%; font: inherit; color: var(--ink); background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 12px; outline: none; }
+label { display: block; font-weight: 500; margin: 12px 0 4px; text-align: right; }
+input { width: 100%; font: inherit; color: var(--ink); background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 12px; outline: none; text-align: right; }
 .logo { flex: 1; position: relative; min-height: 200px; margin-top: 8px; }
 .logo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
 
-/* الواجهة المطابقة للصورة الأخيرة */
-.top-exit { display: flex; justify-content: flex-end; margin-bottom: 12px; }
+.top-exit { display: flex; justify-content: flex-start; margin-bottom: 12px; }
 .btn-exit { background: #fff; border: 1px solid var(--line); padding: 8px 20px; border-radius: 12px; font-size: 16px; cursor: pointer; color: var(--ink); }
 
 .citizen-title { font-size: 26px; font-weight: 700; margin: 0 0 2px 0; color: #1B1610; text-align: right; }
@@ -48,23 +45,23 @@ input { width: 100%; font: inherit; color: var(--ink); background: #fff; border:
 .card-details { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 6px 16px; margin-bottom: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.02); }
 .card-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #f7f3eb; }
 .card-row:last-child { border-bottom: 0; }
-.card-label { color: var(--mute); font-size: 16px; }
-.card-val { font-weight: 700; font-size: 17px; color: #1B1610; }
+.card-label { color: var(--mute); font-size: 16px; text-align: right; }
+.card-val { font-weight: 700; font-size: 17px; color: #1B1610; text-align: left; }
 
 .tbl-heading { font-size: 20px; font-weight: 700; text-align: right; margin: 0 0 14px 0; color: #1B1610; }
 
 .tw { border: 1px solid var(--line); border-radius: 14px; overflow: hidden; background: #fff; }
-table { width: 100%; border-collapse: collapse; text-align: center; font-size: 13px; table-layout: fixed; }
-th { background: #FDF6E2; color: #a36209; padding: 8px 1px; font-size: 12px; font-weight: bold; border: 1px solid var(--line); }
-td { border: 1px solid var(--line); padding: 7px 1px; color: var(--ink); height: 32px; }
-td.month-col { color: var(--mute); font-weight: 500; font-size: 12px; }
+table { width: 100%; border-collapse: collapse; text-align: center; font-size: 13px; table-layout: fixed; direction: rtl; }
+th { background: #FDF6E2; color: #a36209; padding: 8px 1px; font-size: 12px; font-weight: bold; border: 1px solid var(--line); text-align: center; }
+td { border: 1px solid var(--line); padding: 7px 1px; color: var(--ink); height: 32px; text-align: center; }
+td.month-col { color: var(--mute); font-weight: 500; font-size: 12px; background: #fffdf8; }
 
 .footer-up { color: var(--mute); font-size: 13px; text-align: right; margin-top: 14px; }
 </style>
 </head>
 <body>
 
-<!-- الشاشة 1: اختيار الخدمة -->
+<!-- الشاشة الأولى: اختيار الخدمة -->
 <main id="s1">
   <h1>بوابة المواطن</h1>
   <div class="sub">عبد السلام سعد نجم عبوش - وكالة المواد الغذائية</div>
@@ -74,9 +71,9 @@ td.month-col { color: var(--mute); font-weight: 500; font-size: 12px; }
   <div class="logo"><img alt="شعار الوكالة" src="logo.png"></div>
 </main>
 
-<!-- الشاشة 2: إدخال البيانات -->
+<!-- الشاشة الثانية: تسجيل الدخول -->
 <main id="s2" hidden>
-  <div><button id="b2" type="button" style="padding:6px 16px; border-radius:10px; cursor:pointer;">← رجوع</button></div>
+  <div><button id="b2" type="button" style="padding:6px 16px; border-radius:10px; cursor:pointer;">رجوع ←</button></div>
   <h1 id="ttl" style="margin-top:15px;">تسجيل الدخول</h1>
   <form id="f" autocomplete="off">
     <label for="nn">اسم رب الأسرة (الاسم الثلاثي كما في البطاقة)</label>
@@ -88,10 +85,10 @@ td.month-col { color: var(--mute); font-weight: 500; font-size: 12px; }
   <div class="logo"><img alt="شعار الوكالة" src="logo.png"></div>
 </main>
 
-<!-- الشاشة 3: الواجهة المطابقة للقطة الشاشة تماماً -->
+<!-- الشاشة الثالثة: عرض البيانات والجدول -->
 <main id="s3" hidden>
   <div class="top-exit">
-    <button class="btn-exit" id="b3" type="button">خروج ←</button>
+    <button class="btn-exit" id="b3" type="button">← خروج</button>
   </div>
 
   <div class="citizen-title" id="fn">سعد نجم عبوش</div>
@@ -99,20 +96,20 @@ td.month-col { color: var(--mute); font-weight: 500; font-size: 12px; }
 
   <div class="card-details">
     <div class="card-row">
-      <span class="card-val" id="icd">4509667</span>
       <span class="card-label">رقم البطاقة</span>
+      <span class="card-val" id="icd">4509667</span>
     </div>
     <div class="card-row">
-      <span class="card-val">10</span>
       <span class="card-label">عدد الأفراد</span>
-    </div>
-    <div class="card-row">
       <span class="card-val">10</span>
-      <span class="card-label">المستحقون</span>
     </div>
     <div class="card-row">
-      <span class="card-val">0</span>
+      <span class="card-label">المستحقون</span>
+      <span class="card-val">10</span>
+    </div>
+    <div class="card-row">
       <span class="card-label">المحجوبون</span>
+      <span class="card-val">0</span>
     </div>
   </div>
 
@@ -122,30 +119,30 @@ td.month-col { color: var(--mute); font-weight: 500; font-size: 12px; }
     <table>
       <thead>
         <tr>
-          <th>المبلغ</th>
-          <th>الأفراد</th>
-          <th>بقوليات</th>
-          <th>رز</th>
-          <th>معجون</th>
-          <th>سكر</th>
-          <th>زيت</th>
-          <th>طحين</th>
           <th>الشهر</th>
+          <th>طحين</th>
+          <th>زيت</th>
+          <th>سكر</th>
+          <th>معجون</th>
+          <th>رز</th>
+          <th>بقوليات</th>
+          <th>الأفراد</th>
+          <th>المبلغ</th>
         </tr>
       </thead>
       <tbody id="tb">
-        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="month-col">الأول</td></tr>
-        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="month-col">الثاني</td></tr>
-        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="month-col">الثالث</td></tr>
-        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="month-col">الرابع</td></tr>
-        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="month-col">الخامس</td></tr>
-        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="month-col">السادس</td></tr>
-        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="month-col">السابع</td></tr>
-        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="month-col">الثامن</td></tr>
-        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="month-col">التاسع</td></tr>
-        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="month-col">العاشر</td></tr>
-        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="month-col">الحادي عشر</td></tr>
-        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="month-col">الثاني عشر</td></tr>
+        <tr><td class="month-col">الأول</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td class="month-col">الثاني</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td class="month-col">الثالث</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td class="month-col">الرابع</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td class="month-col">الخامس</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td class="month-col">السادس</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td class="month-col">السابع</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td class="month-col">الثامن</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td class="month-col">التاسع</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td class="month-col">العاشر</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td class="month-col">الحادي عشر</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td class="month-col">الثاني عشر</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
       </tbody>
     </table>
   </div>
