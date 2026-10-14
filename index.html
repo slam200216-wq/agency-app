@@ -36,6 +36,7 @@ input { width: 100%; font: inherit; color: var(--ink); background: #fff; border:
 .logo { flex: 1; position: relative; min-height: 200px; margin-top: 8px; }
 .logo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
 
+/* الشريط العلوي: زر خروج على اليمين وزر القائمة على اليسار */
 .top-bar-s3 { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
 .btn-exit { background: #fff; border: 1px solid var(--line); padding: 8px 16px; border-radius: 12px; font-size: 16px; cursor: pointer; color: var(--ink); }
 
@@ -90,7 +91,7 @@ td.month-col { color: var(--mute); font-weight: 500; font-size: 12px; background
   <div class="sub">عبد السلام سعد نجم عبوش - وكالة المواد الغذائية</div>
   <button class="big r" id="gr" type="button">الحصة التموينية</button>
   <div style="height:12px;"></div>
-  <button class="big w" id="gw" type="button">أعادة الاجتماعية</button>
+  <button class="big w" id="gw" type="button">الرعاية الاجتماعية</button>
   <div class="logo"><img alt="شعار الوكالة" src="logo.png"></div>
 </main>
 
@@ -111,8 +112,8 @@ td.month-col { color: var(--mute); font-weight: 500; font-size: 12px; background
 <!-- الشاشة الثالثة: عرض البيانات والجدول -->
 <main id="s3" hidden>
   <div class="top-bar-s3">
-    <button class="btn-exit" onclick="toggleSidebar()" type="button" style="font-size: 18px; padding: 6px 12px; font-weight: bold;">☰ القائمة</button>
     <button class="btn-exit" id="b3" type="button">خروج ←</button>
+    <button class="btn-exit" onclick="toggleSidebar()" type="button" style="font-size: 18px; padding: 6px 12px; font-weight: bold;">☰ القائمة</button>
   </div>
 
   <div class="citizen-title" id="fn">سعد نجم عبوش</div>
@@ -199,7 +200,6 @@ td.month-col { color: var(--mute); font-weight: 500; font-size: 12px; background
 </div>
 
 <script>
-  // تخزين وعرض العائلات المتعددة
   let families = JSON.parse(localStorage.getItem('saved_families')) || [];
   let activeIndex = localStorage.getItem('active_family_index') !== null ? parseInt(localStorage.getItem('active_family_index')) : -1;
 
@@ -293,7 +293,7 @@ td.month-col { color: var(--mute); font-weight: 500; font-size: 12px; background
 
   document.getElementById('gw').onclick = () => {
     mode = 'w';
-    ttl.textContent = 'أعادة الاجتماعية';
+    ttl.textContent = 'الرعاية الاجتماعية';
     l1.textContent = 'رقم البطاقة / الرمز الشريطي';
     s1.hidden = true;
     s2.hidden = false;
@@ -317,9 +317,8 @@ td.month-col { color: var(--mute); font-weight: 500; font-size: 12px; background
     const cVal = cd.value.trim();
     if(!nVal || !cVal) return;
 
-    const sName = (mode === 'r') ? 'الحصة التموينية' : 'أعادة الاجتماعية';
+    const sName = (mode === 'r') ? 'الحصة التموينية' : 'الرعاية الاجتماعية';
 
-    // التحقق مما إذا كانت البطاقة مسجلة مسبقاً، وإلا إضافتها
     let existingIndex = families.findIndex(fam => fam.card === cVal);
     if (existingIndex !== -1) {
       activeIndex = existingIndex;
@@ -333,16 +332,11 @@ td.month-col { color: var(--mute); font-weight: 500; font-size: 12px; background
     f.reset();
   };
 
-  // عند فتح التطبيق، التحقق إن كانت هناك عائلة مسجلة مسبقاً لعرضها مباشرة
   window.addEventListener('DOMContentLoaded', () => {
     if (families.length > 0 && activeIndex >= 0 && activeIndex < families.length) {
-      loadActiveCardAuto();
+      loadActiveFamilyData();
     }
   });
-
-  function loadActiveCardAuto() {
-    loadActiveFamilyData();
-  }
 </script>
 </body>
 </html>
