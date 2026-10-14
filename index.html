@@ -57,6 +57,15 @@ td { border: 1px solid var(--line); padding: 7px 1px; color: var(--ink); height:
 td.month-col { color: var(--mute); font-weight: 500; font-size: 12px; background: #fffdf8; }
 
 .footer-up { color: var(--mute); font-size: 13px; text-align: right; margin-top: 14px; }
+
+/* نافذة لا يوجد اتصال بالإنترنت المطابقة لصورتك تماماً */
+.offline-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000; justify-content: center; align-items: center; }
+.offline-modal.active { display: flex; }
+.offline-box { background: #fff; width: 85%; max-width: 360px; border-radius: 24px; padding: 24px 20px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.2); border: 1px solid var(--line); }
+.offline-title { color: #dc2626; font-size: 20px; font-weight: bold; margin-bottom: 12px; }
+.offline-text { color: #334155; font-size: 14px; line-height: 1.6; margin-bottom: 20px; }
+.spinner { width: 36px; height: 36px; border: 3px solid #f3f3f3; border-top: 3px solid #dc2626; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto; }
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 </style>
 </head>
 <body>
@@ -150,56 +159,80 @@ td.month-col { color: var(--mute); font-weight: 500; font-size: 12px; background
   <div class="footer-up">آخر تحديث: ٤:٥٨:٢٣ م (يتحدّث تلقائياً)</div>
 </main>
 
+<!-- نافذة لا يوجد اتصال بالإنترنت -->
+<div class="offline-modal" id="offlineModal">
+  <div class="offline-box">
+    <div class="offline-title">لا يوجد اتصال بالإنترنت</div>
+    <div class="offline-text">
+      يرجى التأكد من اتصالك بالإنترنت للمتابعة. لن يعمل التطبيق أو يفتح إلا بعد استعادة الاتصال.
+    </div>
+    <div class="spinner"></div>
+  </div>
+</div>
+
 <script>
-let mode = 'r';
-const s1 = document.getElementById('s1');
-const s2 = document.getElementById('s2');
-const s3 = document.getElementById('s3');
-const ttl = document.getElementById('ttl');
-const l1 = document.getElementById('l1');
-const f = document.getElementById('f');
-const nn = document.getElementById('nn');
-const cd = document.getElementById('cd');
+  // فحص الاتصال بالإنترنت تلقائياً
+  function checkOnlineStatus() {
+    const modal = document.getElementById('offlineModal');
+    if (!navigator.onLine) {
+      modal.classList.add('active');
+    } else {
+      modal.classList.remove('active');
+    }
+  }
+  window.addEventListener('online', checkOnlineStatus);
+  window.addEventListener('offline', checkOnlineStatus);
+  checkOnlineStatus();
 
-document.getElementById('gr').onclick = () => {
-  mode = 'r';
-  ttl.textContent = 'الحصة التموينية';
-  l1.textContent = 'رقم البطاقة التموينية';
-  s1.hidden = true;
-  s2.hidden = false;
-};
+  let mode = 'r';
+  const s1 = document.getElementById('s1');
+  const s2 = document.getElementById('s2');
+  const s3 = document.getElementById('s3');
+  const ttl = document.getElementById('ttl');
+  const l1 = document.getElementById('l1');
+  const f = document.getElementById('f');
+  const nn = document.getElementById('nn');
+  const cd = document.getElementById('cd');
 
-document.getElementById('gw').onclick = () => {
-  mode = 'w';
-  ttl.textContent = 'أعادة الاجتماعية';
-  l1.textContent = 'رقم البطاقة / الرمز الشريطي';
-  s1.hidden = true;
-  s2.hidden = false;
-};
+  document.getElementById('gr').onclick = () => {
+    mode = 'r';
+    ttl.textContent = 'الحصة التموينية';
+    l1.textContent = 'رقم البطاقة التموينية';
+    s1.hidden = true;
+    s2.hidden = false;
+  };
 
-document.getElementById('b2').onclick = () => {
-  s2.hidden = true;
-  s1.hidden = false;
-  f.reset();
-};
+  document.getElementById('gw').onclick = () => {
+    mode = 'w';
+    ttl.textContent = 'أعادة الاجتماعية';
+    l1.textContent = 'رقم البطاقة / الرمز الشريطي';
+    s1.hidden = true;
+    s2.hidden = false;
+  };
 
-document.getElementById('b3').onclick = () => {
-  s3.hidden = true;
-  s1.hidden = false;
-  f.reset();
-};
+  document.getElementById('b2').onclick = () => {
+    s2.hidden = true;
+    s1.hidden = false;
+    f.reset();
+  };
 
-f.onsubmit = (e) => {
-  e.preventDefault();
-  const nVal = nn.value.trim();
-  const cVal = cd.value.trim();
-  if(!nVal || !cVal) return;
-  document.getElementById('fn').textContent = nVal;
-  document.getElementById('fsub').textContent = mode === 'r' ? 'الحصة التموينية' : 'أعادة الاجتماعية';
-  document.getElementById('icd').textContent = cVal;
-  s2.hidden = true;
-  s3.hidden = false;
-};
+  document.getElementById('b3').onclick = () => {
+    s3.hidden = true;
+    s1.hidden = false;
+    f.reset();
+  };
+
+  f.onsubmit = (e) => {
+    e.preventDefault();
+    const nVal = nn.value.trim();
+    const cVal = cd.value.trim();
+    if(!nVal || !cVal) return;
+    document.getElementById('fn').textContent = nVal;
+    document.getElementById('fsub').textContent = mode === 'r' ? 'الحصة التموينية' : 'أعادة الاجتماعية';
+    document.getElementById('icd').textContent = cVal;
+    s2.hidden = true;
+    s3.hidden = false;
+  };
 </script>
 </body>
 </html>
