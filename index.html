@@ -166,7 +166,7 @@ body.welfare-theme td.month-col { background: #f8fafc; }
 
   <div class="tw">
     <table id="dataTable">
-      <!-- يتم إنشاء الهيدر والجسم برمجياً بحسب نوع الخدمة -->
+      <!-- جدول التموينية أو الرعاية برمجياً -->
     </table>
   </div>
 
@@ -193,7 +193,7 @@ body.welfare-theme td.month-col { background: #f8fafc; }
 <div class="drawer-overlay" id="drawerOverlay" onclick="toggleSidebar()"></div>
 <div class="side-drawer" id="sideDrawer">
   <div class="drawer-header">
-    <span class="drawer-title">البطاقات المسجلة</span>
+    <span class="drawer-title" id="drawerTitle">البطاقات المسجلة</span>
     <button class="drawer-close" onclick="toggleSidebar()">✕</button>
   </div>
   <div class="families-list" id="familiesList"></div>
@@ -212,6 +212,7 @@ body.welfare-theme td.month-col { background: #f8fafc; }
 </div>
 
 <script>
+  let mode = 'r'; // 'r' للتموينية أو 'w' للرعاية
   let families = JSON.parse(localStorage.getItem('saved_families')) || [];
   let activeIndex = localStorage.getItem('active_family_index') !== null ? parseInt(localStorage.getItem('active_family_index')) : -1;
 
@@ -238,18 +239,28 @@ body.welfare-theme td.month-col { background: #f8fafc; }
     }
   }
 
+  /* عرض بطاقات العوائل المسجلة مفصولة بحسب نوع الخدمة الحالية */
   function renderFamiliesList() {
     const list = document.getElementById('familiesList');
+    const drawerTitle = document.getElementById('drawerTitle');
+    const currentService = (mode === 'r') ? 'الحصة التموينية' : 'الرعاية الاجتماعية';
+    
+    drawerTitle.textContent = 'بطاقات ' + currentService;
     list.innerHTML = '';
-    if (families.length === 0) {
-      list.innerHTML = '<div style="text-align:center; color:var(--mute); padding:20px;">لا توجد بطاقات مسجلة حالياً</div>';
+
+    const filtered = families.map((fam, originalIdx) => ({ ...fam, originalIdx }))
+                            .filter(fam => fam.serviceName === currentService);
+
+    if (filtered.length === 0) {
+      list.innerHTML = `<div style="text-align:center; color:var(--mute); padding:20px;">لا توجد بطاقات مسجلة في ${currentService}</div>`;
       return;
     }
-    families.forEach((fam, idx) => {
+
+    filtered.forEach((fam) => {
       list.innerHTML += `
-        <div class="family-drawer-item ${idx === activeIndex ? 'active' : ''}" onclick="switchFamily(${idx})">
+        <div class="family-drawer-item ${fam.originalIdx === activeIndex ? 'active' : ''}" onclick="switchFamily(${fam.originalIdx})">
           <div class="family-drawer-name">${fam.name}</div>
-          <div class="family-drawer-card">رقم البطاقة: ${fam.card} (${fam.serviceName})</div>
+          <div class="family-drawer-card">رقم البطاقة: ${fam.card}</div>
         </div>
       `;
     });
@@ -262,7 +273,6 @@ body.welfare-theme td.month-col { background: #f8fafc; }
     loadActiveFamilyData();
   }
 
-  /* توليد جدول المواد بحسب الخدمة */
   function buildTable(serviceName) {
     const tbl = document.getElementById('dataTable');
     const months = ["الأول", "الثاني", "الثالث", "الرابع", "الخامس", "السادس", "السابع", "الثامن", "التاسع", "العاشر", "الحادي عشر", "الثاني عشر"];
@@ -287,11 +297,12 @@ body.welfare-theme td.month-col { background: #f8fafc; }
   function loadActiveFamilyData() {
     if (activeIndex >= 0 && activeIndex < families.length) {
       const fam = families[activeIndex];
+      mode = (fam.serviceName === 'الرعاية الاجتماعية') ? 'w' : 'r';
       document.getElementById('fn').textContent = fam.name;
       document.getElementById('icd').textContent = fam.card;
       document.getElementById('fsub').textContent = fam.serviceName;
       
-      const isWelfare = (fam.serviceName === 'الرعاية الاجتماعية');
+      const isWelfare = (mode === 'w');
       applyTheme(isWelfare);
       buildTable(fam.serviceName);
 
@@ -306,6 +317,7 @@ body.welfare-theme td.month-col { background: #f8fafc; }
     toggleSidebar();
     s3.hidden = true;
     s1.hidden = false;
+    s2.hidden = true;
     applyTheme(false);
     updateNavHighlight('h');
   }
@@ -370,7 +382,6 @@ body.welfare-theme td.month-col { background: #f8fafc; }
   window.addEventListener('offline', checkOnlineStatus);
   checkOnlineStatus();
 
-  let mode = 'r';
   const s1 = document.getElementById('s1');
   const s2 = document.getElementById('s2');
   const s3 = document.getElementById('s3');
@@ -399,7 +410,7 @@ body.welfare-theme td.month-col { background: #f8fafc; }
 
     const sName = (mode === 'r') ? 'الحصة التموينية' : 'الرعاية الاجتماعية';
 
-    let existingIndex = families.findIndex(fam => fam.card === cVal);
+    let existingIndex = families.findIndex(fam => fam.card === cVal && fam.serviceName === sName);
     if (existingIndex !== -1) {
       activeIndex = existingIndex;
     } else {
