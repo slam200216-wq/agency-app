@@ -74,6 +74,17 @@ td.ck{color:#2E7D32;font-weight:700;font-size:16px}
 .offline-text{color:#334155;font-size:14px;line-height:1.6;margin-bottom:20px}
 .spinner{width:36px;height:36px;border:3px solid #f3f3f3;border-top:3px solid #dc2626;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto}
 @keyframes spin{to{transform:rotate(360deg)}}
+.ico{position:relative;display:inline-flex}
+.badge{position:absolute;top:-6px;right:-8px;min-width:18px;height:18px;padding:0 4px;border-radius:9px;background:#dc2626;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.toast{position:fixed;top:14px;left:50%;transform:translateX(-50%) translateY(-140px);max-width:90%;background:#1B1610;color:#fff;padding:12px 18px;border-radius:14px;z-index:4000;font-size:15px;transition:transform .3s ease;box-shadow:0 6px 20px rgba(0,0,0,.25);text-align:center}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.news-card{border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:10px;background:#fff}
+.news-card.fresh{border-color:var(--acc);background:var(--thbg)}
+.news-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;gap:8px}
+.chip{font-size:12px;font-weight:700;padding:2px 10px;border-radius:10px;color:#fff}
+.chip.cr{background:#d97706}.chip.cw{background:#2563eb}
+.news-date{color:var(--mute);font-size:12px}
+.news-text{font-size:17px;font-weight:700}
 </style>
 </head>
 <body>
@@ -115,6 +126,14 @@ td.ck{color:#2E7D32;font-weight:700;font-size:16px}
 <div class="footer-up" id="footerUp"></div>
 </main>
 
+<main id="s4" hidden>
+<h1 style="margin-top:15px">ما الجديد</h1>
+<div class="sub">إشعارات وصول المواد من الوكيل</div>
+<div id="newsList"></div>
+</main>
+
+<div class="toast" id="toast" role="status"></div>
+
 <nav class="bottom-nav">
 <button class="nav-item" id="navRation" onclick="navSelect('r')" type="button">
 <svg class="nav-icon" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-7-2h2v-4h4v-2h-4V7h-2v4H8v2h4z"/></svg>
@@ -127,6 +146,10 @@ td.ck{color:#2E7D32;font-weight:700;font-size:16px}
 <button class="nav-item" id="navWelfare" onclick="navSelect('w')" type="button">
 <svg class="nav-icon" viewBox="0 0 24 24"><path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>
 <span class="nav-label">الرعاية الاجتماعية</span>
+</button>
+<button class="nav-item" id="navNews" onclick="navSelect('n')" type="button">
+<span class="ico"><svg class="nav-icon" viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg><span class="badge" id="newsBadge" hidden>0</span></span>
+<span class="nav-label">ما الجديد</span>
 </button>
 </nav>
 
@@ -151,7 +174,7 @@ td.ck{color:#2E7D32;font-weight:700;font-size:16px}
 
 <script type="module">
 import {initializeApp} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
-import {getFirestore,doc,onSnapshot} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+import {getFirestore,doc,onSnapshot,collection,query,orderBy,limit} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 import {firebaseConfig} from "./firebase-config.js";
 const db=getFirestore(initializeApp(firebaseConfig));
 /*PURE1-START*/
@@ -173,8 +196,8 @@ const mk=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=nu
 const fmt=n=>String(n).replace(/\B(?=(\d{3})+(?!\d))/g,",");
 const stop=()=>{if(unsub){unsub();unsub=null}};
 const applyTheme=w=>document.body.classList.toggle("welfare-theme",w);
-const showScreen=n=>{["s1","s2","s3"].forEach(i=>{$(i).hidden=i!==n});window.scrollTo(0,0)};
-const navHi=k=>[["navRation","r"],["navHome","h"],["navWelfare","w"]].forEach(([id,x])=>$(id).classList.toggle("active",x===k));
+const showScreen=n=>{["s1","s2","s3","s4"].forEach(i=>{$(i).hidden=i!==n});window.scrollTo(0,0)};
+const navHi=k=>[["navRation","r"],["navHome","h"],["navWelfare","w"],["navNews","n"]].forEach(([id,x])=>$(id).classList.toggle("active",x===k));
 const hasSvc=s=>families.some(f=>f.serviceName===s);
 
 function toggleSidebar(){const d=$("sideDrawer"),o=$("drawerOverlay");d.classList.toggle("active");o.classList.toggle("active");if(d.classList.contains("active"))renderList()}
@@ -266,6 +289,7 @@ async function login(nVal,cVal){
     ()=>showErr("تعذر الاتصال. حاول مرة أخرى."))}
 
 function navSelect(t){
+  if(t==="n"){stop();showScreen("s4");navHi("n");renderNews(true);return}
   if(t==="h"){stop();showScreen("s1");applyTheme(false);navHi("h");return}
   const s=t==="r"?SN.r:SN.w;mode=t;
   if(hasSvc(s)){const i=(families[activeIndex]&&families[activeIndex].serviceName===s)?activeIndex:families.findIndex(f=>f.serviceName===s);openFamily(i)}
@@ -282,6 +306,24 @@ $("f").onsubmit=e=>{
   if(!digits(c)){showErr("اكتب رقم البطاقة بالأرقام.");return}
   login(n,c)};
 
+let news=[],seen=0,firstNews=true,tt=null;
+try{seen=parseInt(localStorage.getItem("news_seen"))||0}catch(e){}
+function badge(){const n=news.filter(x=>x.ts>seen).length,b=$("newsBadge");b.textContent=n>9?"9+":String(n);b.hidden=n===0}
+function renderNews(markSeen){
+  const L=$("newsList");L.innerHTML="";
+  if(!news.length)L.appendChild(mk("div","empty-note","لا توجد إشعارات بعد."));
+  news.forEach(x=>{
+    const c=mk("div","news-card"+(x.ts>seen?" fresh":"")),top=mk("div","news-top");
+    top.appendChild(mk("span","chip "+(x.sec==="welfare"?"cw":"cr"),x.sec==="welfare"?SN.w:SN.r));
+    top.appendChild(mk("span","news-date",new Date(x.ts).toLocaleString("ar-IQ",{dateStyle:"medium",timeStyle:"short"})));
+    c.appendChild(top);c.appendChild(mk("div","news-text",x.text));L.appendChild(c)});
+  if(markSeen&&news.length){seen=Math.max(seen,...news.map(x=>x.ts));try{localStorage.setItem("news_seen",String(seen))}catch(e){}badge()}}
+function toast(t){const e=$("toast");e.textContent="🔔 "+t;e.classList.add("show");clearTimeout(tt);tt=setTimeout(()=>e.classList.remove("show"),6000)}
+onSnapshot(query(collection(db,"news"),orderBy("ts","desc"),limit(40)),snap=>{
+  const added=firstNews?[]:snap.docChanges().filter(c=>c.type==="added").map(c=>c.doc.data());
+  news=snap.docs.map(d=>d.data());firstNews=false;badge();
+  if(!$("s4").hidden)renderNews(true);
+  added.forEach(x=>toast(x.text))},()=>{});
 const checkOnline=()=>$("offlineModal").classList.toggle("active",!navigator.onLine);
 window.addEventListener("online",checkOnline);window.addEventListener("offline",checkOnline);checkOnline();
 Object.assign(window,{toggleSidebar,navSelect,executeDelete,closeConfirmModal});
